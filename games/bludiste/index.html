@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#76b74b">
+    <meta name="description" content="Bludiště – táhni mrkev spletitými chodbami až k zajíčkovi.">
+    <title>Bludiště · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="bludiste.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="bludiste.js" defer></script>
+</head>
+<body class="maze-page">
+    <a class="skip-link" href="#hra">Přeskočit ke hře</a>
+
+    <header class="maze-header">
+        <div class="maze-shell maze-header__inner">
+            <a class="back-link" href="../../">← Zpět do budky</a>
+            <div>
+                <p class="eyebrow" aria-hidden="true">🥕 Druhé patro</p>
+                <h1>Bludiště</h1>
+                <p>Chyť mrkev a proveď ji zelenými chodbičkami až k hladovému zajíčkovi.</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="hra" class="maze-shell maze-game">
+        <noscript>
+            <p class="maze-message maze-message--error">Pro spuštění hry je potřeba povolit JavaScript.</p>
+        </noscript>
+
+        <section class="maze-toolbar" aria-labelledby="maze-settings-heading">
+            <div>
+                <h2 id="maze-settings-heading">Připrav si bludiště</h2>
+                <p>Čím vyšší obtížnost, tím více spletitých chodbiček.</p>
+            </div>
+            <label class="difficulty-control" for="difficulty">
+                Obtížnost
+                <select id="difficulty">
+                    <option value="easy">Lehká · 7 × 7</option>
+                    <option value="medium">Střední · 11 × 11</option>
+                    <option value="hard">Těžká · 15 × 15</option>
+                </select>
+            </label>
+            <button class="button button--secondary" id="new-maze" type="button">Nové bludiště</button>
+        </section>
+
+        <div class="maze-layout">
+            <section class="maze-card" aria-labelledby="maze-board-heading">
+                <div class="card-heading">
+                    <div>
+                        <p class="step-label">Najdi cestu</p>
+                        <h2 id="maze-board-heading">Od mrkve k zajíčkovi</h2>
+                    </div>
+                    <span id="maze-size" class="maze-size"></span>
+                </div>
+
+                <div class="canvas-frame" id="canvas-frame">
+                    <canvas
+                        id="maze-canvas"
+                        class="maze-canvas"
+                        width="700"
+                        height="700"
+                        tabindex="0"
+                        role="application"
+                        aria-label="Bludiště. Chyť mrkev a táhni ji chodbami k zajíčkovi. Můžeš také použít šipky na klávesnici.">
+                        Tvůj prohlížeč nepodporuje herní plochu canvas.
+                    </canvas>
+                    <div id="success-burst" class="success-burst" aria-hidden="true">Výborně! 🎉</div>
+                </div>
+
+                <p class="canvas-help"><strong>Jak hrát:</strong> Stiskni mrkev a drž ji při cestě chodbami. Když narazíš, zůstane na posledním správném místě.</p>
+            </section>
+
+            <aside class="maze-panel" aria-labelledby="maze-panel-heading">
+                <div>
+                    <p class="step-label">Tvoje výprava</p>
+                    <h2 id="maze-panel-heading">Pomoz zajíčkovi</h2>
+                </div>
+
+                <div class="character-story" aria-hidden="true">
+                    <span class="story-character">🥕</span>
+                    <span class="story-path">········</span>
+                    <span class="story-character">🐰</span>
+                </div>
+
+                <div id="maze-message" class="maze-message" role="status" aria-live="assertive" aria-atomic="true">
+                    Chyť mrkev a vydej se k zajíčkovi!
+                </div>
+
+                <div class="maze-actions">
+                    <button class="button button--quiet" id="clear-trail" type="button">Vymazat stopu</button>
+                    <button class="button button--primary" id="next-maze" type="button">Nové bludiště</button>
+                </div>
+
+                <details class="keyboard-help">
+                    <summary>Ovládání klávesnicí</summary>
+                    <p>Klikni nebo tabulátorem přejdi na herní plochu. Šipkami potom posouvej mrkev po chodbičkách.</p>
+                </details>
+
+                <div class="accessibility-note">
+                    <span aria-hidden="true">💡</span>
+                    <p>Oranžová stopa ukazuje, kudy už mrkev prošla. Při nárazu se ozve přátelské hlášení.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="maze-footer">
+        <div class="maze-shell">
+            <a href="../../">← Zpět do Herní budky</a>
+            <p>Herní budka · <span data-current-year>2026</span></p>
+        </div>
+    </footer>
+</body>
+</html>
