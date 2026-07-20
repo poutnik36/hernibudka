@@ -21,7 +21,7 @@
     }
 
     function createCloudLayout(blockWidth, blockHeight, imageAspectRatio = 1.75, anchorAtEnd = false) {
-        const cloudWidth = blockWidth / 3;
+        const cloudWidth = blockWidth / 2;
         const cloudHeight = cloudWidth / imageAspectRatio;
         const horizontalStep = cloudWidth / 2;
         const verticalStep = cloudHeight / 2;
@@ -30,7 +30,7 @@
         return {
             cloudWidth,
             cloudHeight,
-            columns: Array.from({ length: 5 }, (_, index) => index * horizontalStep),
+            columns: Array.from({ length: 3 }, (_, index) => index * horizontalStep),
             rows: Array.from({ length: rowCount }, (_, index) => firstRowY + (anchorAtEnd ? -1 : 1) * index * verticalStep)
         };
     }
