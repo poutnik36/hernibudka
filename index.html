@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Angličtina pro policejní praxi - slovíčka</title>
+    <meta name="description" content="Lehká webová aplikace pro opakování anglických slovíček podle lekcí (CSV: první řádek názvy lekcí)." />
+    <style>
+        :root {
+            --bg: #0b1020;
+            --card: #121832;
+            --text: #e8eefc;
+            --muted: #9aa6c8;
+            --acc: #7aa2ff;
+            --border: #243055;
+            --good: #16a34a;
+            --bad: #ef4444;
+            --warn: #f59e0b;
+        }
+
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #0b1020;
+            --muted: #475569;
+            --acc: #1d4ed8;
+            --border: #e2e8f0;
+            --good: #16a34a;
+            --bad: #b91c1c;
+            --warn: #b45309;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0;
+            font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: saturate(1.2) blur(8px);
+            background: color-mix(in oklab, var(--bg) 85%, transparent);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin-inline: auto;
+            padding: 1rem
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            padding: .55rem .9rem;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            border-radius: .8rem;
+            cursor: pointer
+        }
+
+            .btn:hover {
+                transform: translateY(-1px)
+            }
+
+            .btn.secondary {
+                background: transparent
+            }
+
+        .grid {
+            display: grid;
+            gap: 1rem
+        }
+
+        @media(min-width:1000px) {
+            .grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1rem
+        }
+
+        h2 {
+            margin: 0 0 .5rem;
+            font-size: 1.25rem
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin: .4rem 0 .2rem
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: .6rem .7rem;
+            border-radius: .6rem;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--text)
+        }
+
+        .row {
+            display: flex;
+            gap: .5rem;
+            align-items: center
+        }
+
+            .row.wrap {
+                flex-wrap: wrap
+            }
+
+            .row > * {
+                flex: 1
+            }
+
+        .pill {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: .2rem .6rem;
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        .result {
+            margin-top: .6rem;
+            font-weight: 700
+        }
+
+        .good {
+            color: var(--good)
+        }
+
+        .bad {
+            color: var(--bad)
+        }
+
+        .warn {
+            color: var(--warn)
+        }
+
+        .flex {
+            display: flex;
+            gap: .6rem;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .space {
+            height: 1rem
+        }
+
+        .badge {
+            display: inline-flex;
+            gap: .35rem;
+            align-items: center;
+            padding: .2rem .5rem;
+            border: 1px solid var(--border);
+            border-radius: .6rem;
+            font-size: .85rem;
+            color: var(--muted)
+        }
+
+        .checklist {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem
+        }
+
+        .checklist label {
+            display: flex;
+            gap: .6rem;
+            align-items: flex-start
+        }
+
+        .checklist input {
+            margin-top: .15rem
+        }
+
+        .pairgrid {
+            display: grid;
+            gap: .8rem
+        }
+
+        @media(min-width:900px) {
+            .pairgrid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .innercard {
+            background: color-mix(in oklab, var(--card) 92%, var(--acc) 8%);
+            border: 1px dashed var(--border);
+            border-radius: .8rem;
+            padding: 1rem;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        #prompt {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-align: center
+        }
+
+        #answerCard {
+            position: relative;
+            display: block;
+            min-height: 180px;
+        }
+
+        #answerCard .pane {
+            position: absolute;
+            inset: 0;
+        }
+
+        #paneWrite {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: .8rem;
+        }
+
+        #paneWrite .write-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: .5rem;
+        }
+
+        #paneWrite textarea {
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            max-width: 700px;
+            font-size: 1.4rem;
+            line-height: 1.5;
+            text-align: center;
+            color: var(--text);
+            resize: none;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        #paneWrite .write-actions {
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+            align-items: flex-end;
+            justify-content: center;
+            justify-self: end;
+            padding: .5rem 0;
+        }
+
+        #paneWrite .write-actions .btn {
+            width: fit-content;
+        }
+
+        @media (max-width: 700px) {
+            #paneWrite {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+            }
+
+            #paneWrite .write-actions {
+                align-items: center;
+                justify-content: flex-start;
+                padding: .5rem;
+            }
+        }
+
+        #paneFlash {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+
+        .flashcard {
+            width: 100%;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .flashcard .hint {
+            font-weight: 600;
+            opacity: .85
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrap">
+            <nav>
+                <div class="flex">
+                    <strong>🔁 Angličtina pro policejní praxi - slovíčka</strong>
+                    <span class="pill" id="countInfo">0 slov</span>
+                    <span class="pill" id="filterInfo" title="Filtrovaný počet">0 vybráno</span>
+                    <span class="pill" id="dataInfo" title="Zdroj dat">CSV</span>
+                </div>
+                <div class="flex">
+                    <button class="btn secondary" id="themeBtn" title="Světlý/tmavý režim">🌓 Motiv</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <section class="grid" id="top">
+            <div class="card" id="settings">
+                <h2>Nastavení</h2>
+                <div class="row">
+                    <div>
+                        <label for="direction">Směr</label>
+                        <select id="direction">
+                            <option value="en-cs">EN → CZ</option>
+                            <option value="cs-en">CZ → EN</option>
+                            <option value="mix">Mix</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="mode">Režim</label>
+                        <select id="mode">
+                            <option value="random">Náhodně</option>
+                            <option value="weak">Upřednostnit slabá</option>
+                            <option value="flashcards">Kartičky</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="space"></div>
+                <div class="row">
+                    <div>
+                        <label for="targetCount">Počet slovíček (cíl sezení)</label>
+                        <input id="targetCount" type="number" min="1" step="1" value="20" />
+                    </div>
+                    <div>
+                        <label class="row" style="gap:.6rem"><input id="timed" type="checkbox" /> Učení na čas</label>
+                        <div class="row">
+                            <input id="timeLimit" type="number" min="1" step="1" value="10" />
+                            <span class="badge">min</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space"></div>
+                <div class="flex">
+                    <button class="btn" id="startBtn">▶️ Start</button>
+                    <button class="btn secondary" id="resetBtn">↺ Reset</button>
+                    <span class="badge" id="sessionInfo">Neaktivní</span>
+                    <span class="badge" id="timerInfo" hidden>⏱ 00:00</span>
+                </div>
+            </div>
+
+            <div class="card" id="lessonsPanel">
+                <h2>Lekce</h2>
+                <div class="checklist" id="lessonsBox" aria-label="Výběr lekcí"></div>
+                <div class="row" style="margin-top:.4rem">
+                    <button class="btn secondary" id="selectAllBtn">Vybrat vše</button>
+                    <button class="btn secondary" id="clearAllBtn">Zrušit vše</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="card" id="practice" style="margin-top:1rem">
+            <h2>Trénink</h2>
+            <div class="muted" id="promptMeta">Vyber lekce a spusť sezení.</div>
+
+            <div class="pairgrid" style="margin-top:.6rem">
+                <div class="innercard" id="promptCard">
+                    <div id="prompt"></div>
+                </div>
+
+                <div class="innercard" id="answerCard">
+                    <div class="pane" id="paneWrite">
+                        <div class="write-center">
+                            <textarea id="answer" rows="1" placeholder="Sem napiš odpověď…" disabled></textarea>
+                        </div>
+                        <div class="write-actions" id="answerBtns">
+                            <button class="btn" id="checkBtn" disabled>✅ Zkontrolovat</button>
+                            <button class="btn secondary" id="dontKnowBtn" disabled>🤷‍♂️ Nevím</button>
+                            <button class="btn secondary" id="hintBtn" disabled>💡 Nápověda</button>
+                        </div>
+                    </div>
+
+                    <div class="pane" id="paneFlash" hidden>
+                        <div class="flashcard" id="flashcard" title="Klikni pro zobrazení / další">
+                            <span class="hint">Ukázat →</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result" id="result"></div>
+        </section>
+    </main>
+
+    <script>
+        // ===== Konfigurace CSV =====
+        // 1. řádek: názvy lekcí (oddělené středníkem)
+        // další řádky: angličtina;čeština;číslo_lekce
+        const DEFAULT_DATA_URL = 'slovicka.csv';
+
+        // ===== Stav & util =====
+        const KEY_STATS = 'vt_stats_csv_v1';
+        const KEY_SETTINGS = 'vt_settings_csv_v1';
+
+        let WORDS = [];          
+        let LESSON_TITLES = []; 
+
+        const norm = (s) => (s || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+        const uidOf = (w) => `${w.en}__${w.cs}`;
+        const loadJSON = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
+        const saveJSON = (k, v) => localStorage.setItem(k, JSON.stringify(v));
+
+        let stats = loadJSON(KEY_STATS, {}); 
+        let settings = loadJSON(KEY_SETTINGS, { direction: 'en-cs', mode: 'random', theme: 'dark', lessons: [], target: 20, timed: false, timeMin: 10 });
+
+        // ===== UI prvky =====
+        const directionEl = document.getElementById('direction');
+        const modeEl = document.getElementById('mode');
+        const lessonsBox = document.getElementById('lessonsBox');
+        const selectAllBtn = document.getElementById('selectAllBtn');
+        const clearAllBtn = document.getElementById('clearAllBtn');
+        const targetCountEl = document.getElementById('targetCount');
+        const timedEl = document.getElementById('timed');
+        const timeLimitEl = document.getElementById('timeLimit');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const sessionInfoEl = document.getElementById('sessionInfo');
+        const timerInfoEl = document.getElementById('timerInfo');
+        const promptEl = document.getElementById('prompt');
+        const promptMetaEl = document.getElementById('promptMeta');
+        const answerEl = document.getElementById('answer');
+        const resultEl = document.getElementById('result');
+        const checkBtn = document.getElementById('checkBtn');
+        const dontKnowBtn = document.getElementById('dontKnowBtn');
+        const hintBtn = document.getElementById('hintBtn');
+        const answerBtns = document.getElementById('answerBtns');
+        const countInfoEl = document.getElementById('countInfo');
+        const filterInfoEl = document.getElementById('filterInfo');
+        const dataInfoEl = document.getElementById('dataInfo');
+        const themeBtn = document.getElementById('themeBtn');
+        const paneWrite = document.getElementById('paneWrite');
+        const paneFlash = document.getElementById('paneFlash');
+        const flashcardEl = document.getElementById('flashcard');
+
+        function applyTheme() { document.documentElement.setAttribute('data-theme', settings.theme || 'dark'); }
+        themeBtn.addEventListener('click', () => { settings.theme = settings.theme === 'light' ? 'dark' : 'light'; saveJSON(KEY_SETTINGS, settings); applyTheme(); });
+
+        // ===== CSV načítání a parsování =====
+        function getDataUrl() { try { const u = new URL(location.href); return u.searchParams.get('data') || DEFAULT_DATA_URL; } catch { return DEFAULT_DATA_URL; } }
+        function parseLesson(v) { const m = (v || '').toString().match(/\d+/); return m ? parseInt(m[0], 10) : 1; }
+        function stripBOM(s) { return s && s.charCodeAt(0) === 0xFEFF ? s.slice(1) : s; }
+        function splitCsvSemicolons(line) {
+            const out = []; let cur = ''; let inQ = false;
+            for (let i = 0; i < line.length; i++) {
+                const ch = line[i];
+                if (ch === '"') {
+                    if (inQ && line[i + 1] === '"') { cur += '"'; i++; }
+                    else inQ = !inQ;
+                } else if (ch === ';' && !inQ) {
+                    out.push(cur); cur = '';
+                } else {
+                    cur += ch;
+                }
+            }
+            out.push(cur);
+            return out;
+        }
+
+        function parseCSVWithTitles(text) {
+            const lines = stripBOM(text).split(/\r?\n/);
+            let idx = 0; while (idx < lines.length && !lines[idx].trim()) idx++;
+            if (idx >= lines.length) return { titles: [], words: [] };
+
+            const titles = splitCsvSemicolons(lines[idx].trim()).map(s => s.trim());
+            const words = [];
+            for (let i = idx + 1; i < lines.length; i++) {
+                const raw = lines[i].trim();
+                if (!raw) continue;
+                const f = splitCsvSemicolons(raw);
+                const en = (f[0] || '').trim().replace(/^to\s+/i, '');
+                const cs = (f[1] || '').trim();           
+                const lesson = parseLesson(f[2] || '1');
+                if (en && cs) words.push({ en, cs, lesson });
+            }
+            return { titles, words };
+        }
+
+        async function loadWords() {
+            const url = getDataUrl();
+            dataInfoEl.textContent = url;
+            const resp = await fetch(url, { cache: 'no-store' });
+            if (!resp.ok) { throw new Error('Načtení CSV selhalo: HTTP ' + resp.status); }
+            const txt = await resp.text();
+            const parsed = parseCSVWithTitles(txt);
+            LESSON_TITLES = parsed.titles;
+            WORDS = parsed.words;
+            if (!WORDS.length) { throw new Error('CSV neobsahuje žádná slovíčka.'); }
+            const allowed = Array.from(new Set(WORDS.map(w => w.lesson))).sort((a, b) => a - b);
+            if (settings.lessons.length === 0) { settings.lessons = allowed; }
+            else { settings.lessons = settings.lessons.filter(n => allowed.includes(n)); if (!settings.lessons.length) settings.lessons = allowed; }
+            saveJSON(KEY_SETTINGS, settings);
+        }
+
+        function titleOfLesson(n) { return LESSON_TITLES[n - 1] || `Lekce ${n}`; }
+
+        // ===== Lekce (checkboxy – pod sebou) =====
+        function renderLessons() {
+            lessonsBox.innerHTML = '';
+            const maxL = Math.max(LESSON_TITLES.length, ...WORDS.map(w => w.lesson), 0);
+            for (let i = 1; i <= maxL; i++) {
+                const id = 'lesson_' + i;
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="checkbox" id="${id}" value="${i}"> <span>${titleOfLesson(i)}</span>`;
+                const cb = label.querySelector('input');
+                cb.checked = settings.lessons.includes(i);
+                cb.addEventListener('change', () => {
+                    if (cb.checked) { if (!settings.lessons.includes(i)) settings.lessons.push(i); }
+                    else { settings.lessons = settings.lessons.filter(x => x !== i); }
+                    saveJSON(KEY_SETTINGS, settings); refreshCounts();
+                });
+                lessonsBox.appendChild(label);
+            }
+        }
+        selectAllBtn.addEventListener('click', () => {
+            const set = Array.from(new Set(WORDS.map(w => w.lesson))).sort((a, b) => a - b);
+            settings.lessons = set; saveJSON(KEY_SETTINGS, settings); renderLessons(); refreshCounts();
+        });
+        clearAllBtn.addEventListener('click', () => {
+            settings.lessons = []; saveJSON(KEY_SETTINGS, settings); renderLessons(); refreshCounts();
+        });
+
+        // ===== Filtrace =====
+        function filteredWords() { return WORDS.filter(w => settings.lessons.includes(w.lesson)); }
+
+        // ===== Pomocné pro kontrolu/varianty =====
+        function stripParens(s) {
+            let out = '', depth = 0; for (const ch of String(s)) {
+                if (ch === '(' || ch === '[') { depth++; continue; }
+                if (ch === ')' || ch === ']') { if (depth > 0) depth--; continue; }
+                if (depth === 0) out += ch;
+            } return out;
+        }
+        function cleanDashesSpaces(s) {
+            let t = ''; for (const ch of String(s)) { if (ch === '-' || ch === '–' || ch === '—') t += ' '; else t += ch; }
+            return t.split(' ').filter(Boolean).join(' ').trim();
+        }
+        function variantsRaw(text) {
+            if (text == null) return [];
+            let cleaned = stripParens(String(text));
+            let tmp = cleaned;
+            [';', '/', '|'].forEach(sep => { tmp = tmp.split(sep).join(','); });
+            tmp = tmp.replace(/\bnebo\b/gi, ',');
+            const rawParts = tmp.split(',');
+            const parts = [];
+            for (let p of rawParts) {
+                p = cleanDashesSpaces(p).trim();
+                if (!p) continue;
+                const lower = p.toLowerCase();
+                if (lower.startsWith('to ')) p = p.slice(3);
+                p = cleanDashesSpaces(p);
+                if (p) parts.push(p);
+            }
+            const seen = new Set(); const out = [];
+            for (const p of parts) { const key = norm(p); if (!seen.has(key)) { seen.add(key); out.push(p); } }
+            return out;
+        }
+        function variantsNorm(text) { return variantsRaw(text).map(v => norm(v)); }
+        function firstVariantRaw(text) { const arr = variantsRaw(text); return arr.length ? arr[0] : ''; }
+
+        // ===== Sezení =====
+        let session = { active: false, target: 20, left: 0, ok: 0, bad: 0, timed: false, deadline: null, timerId: null };
+        let current = null;
+        let flashRevealed = false;
+
+        function isFlashcardsMode() { return modeEl.value === 'flashcards'; }
+
+        function setPracticeEnabled(on) {
+            const flash = isFlashcardsMode();
+            paneWrite.style.display = flash ? 'none' : 'flex';
+            paneFlash.style.display = !flash ? 'none' : 'flex';
+            [answerEl, checkBtn, dontKnowBtn, hintBtn].forEach(el => {
+                if (el) el.disabled = !on || flash;
+            });
+        }
+
+        modeEl.addEventListener('change', () => {
+            settings.mode = modeEl.value;
+            saveJSON(KEY_SETTINGS, settings);
+            setPracticeEnabled(session.active);
+        });
+
+        function autogrow(el) {
+            el.style.height = 'auto';
+            el.style.height = Math.min(200, el.scrollHeight) + 'px';
+        }
+        answerEl.addEventListener('input', () => autogrow(answerEl));
+
+        function startSession() {
+            const pool = filteredWords();
+            if (!pool.length) { alert('Vyber alespoň jednu lekci.'); return; }
+            session.active = true;
+            session.target = Math.max(1, parseInt(targetCountEl.value || '20', 10));
+            session.left = session.target;
+            session.ok = 0; session.bad = 0;
+            session.timed = !!timedEl.checked;
+            if (session.timerId) { clearInterval(session.timerId); session.timerId = null; }
+            if (session.timed) {
+                const mins = Math.max(1, parseInt(timeLimitEl.value || '10', 10));
+                session.deadline = Date.now() + mins * 60 * 1000;
+                timerInfoEl.hidden = false;
+                session.timerId = setInterval(() => {
+                    const remain = Math.max(0, session.deadline - Date.now());
+                    const mm = String(Math.floor(remain / 60000)).padStart(2, '0');
+                    const ss = String(Math.floor((remain % 60000) / 1000)).padStart(2, '0');
+                    timerInfoEl.textContent = `⏱ ${mm}:${ss}`;
+                    if (remain <= 0) { endSession('Čas vypršel.'); }
+                }, 200);
+            } else { timerInfoEl.hidden = true; }
+
+            sessionInfoEl.textContent = `Běží – cíl ${session.target}`;
+            resultEl.textContent = ''; resultEl.className = 'result';
+            setPracticeEnabled(true);
+            pickNext();
+        }
+
+        function endSession(msg) {
+            if (!session.active) return;
+            session.active = false;
+            setPracticeEnabled(false);
+            if (session.timerId) { clearInterval(session.timerId); session.timerId = null; }
+            timerInfoEl.hidden = true;
+            sessionInfoEl.textContent = 'Neaktivní';
+            promptMetaEl.textContent = msg || 'Sezení ukončeno.';
+        }
+
+        function resetSession() { endSession('Resetováno.'); promptEl.textContent = ''; answerEl.value = ''; autogrow(answerEl); resultEl.textContent = ''; }
+
+        startBtn.addEventListener('click', startSession);
+        resetBtn.addEventListener('click', resetSession);
+
+        // ===== Výběr dalšího slova =====
+        function chooseWord() {
+            const pool = filteredWords(); if (!pool.length) return null;
+            const m = (modeEl.value === 'weak' ? 'weak' : 'random');
+            if (m === 'random') return pool[Math.floor(Math.random() * pool.length)];
+            const arr = pool.slice().sort((a, b) => { const sa = stats[uidOf(a)] || { ok: 0, bad: 0 }; const sb = stats[uidOf(b)] || { ok: 0, bad: 0 }; const wa = (sa.bad || 0) - (sa.ok || 0); const wb = (sb.bad || 0) - (sb.ok || 0); return wb - wa; });
+            const k = Math.max(3, Math.ceil(arr.length * 0.3)); return arr[Math.floor(Math.random() * k)];
+        }
+
+        function pickNext() {
+            if (!session.active) { promptMetaEl.textContent = 'Vyber lekce a spusť sezení.'; return; }
+            if (session.left <= 0) { endSession('Hotovo – splněn cílový počet slov.'); return; }
+            resultEl.textContent = ''; resultEl.className = 'result'; answerEl.value = ''; autogrow(answerEl);
+            flashRevealed = false;
+            const w = chooseWord(); if (!w) { document.getElementById('prompt').textContent = '(Žádná slova)'; return; }
+            const dir = directionEl.value === 'mix' ? (Math.random() < 0.5 ? 'en-cs' : 'cs-en') : directionEl.value;
+            const ask = dir === 'en-cs' ? w.en : w.cs;
+            const expect = dir === 'en-cs' ? w.cs : w.en;
+            current = { w, ask, expect, dir };
+            document.getElementById('prompt').textContent = ask;
+            promptMetaEl.textContent = `Cíl: ${session.target} • Zbývá: ${session.left} • Správně: ${session.ok} • Špatně: ${session.bad} • Lekce: ${(LESSON_TITLES[w.lesson - 1] || ('Lekce ' + w.lesson))}`;
+
+            if (isFlashcardsMode()) {
+                flashcardEl.dataset.state = '';
+                flashcardEl.innerHTML = '<span class="hint">Ukázat →</span>';
+            }
+            answerEl.focus();
+            session.left--; refreshCounts();
+        }
+
+        // ===== Kontrola + synonyma =====
+        function check() {
+            if (!current || !session.active || isFlashcardsMode()) return;
+            let userRaw = cleanDashesSpaces(answerEl.value || '');
+            if (!userRaw) { resultEl.textContent = 'Zadej odpověď.'; resultEl.className = 'result warn'; return; }
+            const user = norm(userRaw);
+            const id = uidOf(current.w);
+            const s = (stats[id] = stats[id] || { ok: 0, bad: 0 });
+            const ok = variantsNorm(current.expect).includes(user);
+            if (ok) {
+                s.ok++; session.ok++;
+                resultEl.textContent = 'Správně!'; resultEl.className = 'result good';
+                saveJSON(KEY_STATS, stats);
+                setTimeout(() => { if (session.active) { pickNext(); } }, 700);
+            } else {
+                s.bad++; session.bad++;
+                resultEl.innerHTML = `Špatně. Správně: <strong>${firstVariantRaw(current.expect)}</strong>`;
+                resultEl.className = 'result bad';
+                saveJSON(KEY_STATS, stats);
+                promptMetaEl.textContent = `Cíl: ${session.target} • Zbývá: ${session.left} • Správně: ${session.ok} • Špatně: ${session.bad} • Lekce: ${(LESSON_TITLES[current.w.lesson - 1] || ('Lekce ' + current.w.lesson))}`;
+            }
+        }
+
+        // ===== Nevím + Nápověda (mimo kartičky) =====
+        dontKnowBtn.addEventListener('click', () => {
+            if (!current || !session.active || isFlashcardsMode()) return;
+            const fill = firstVariantRaw(current.expect);
+            if (fill) { answerEl.value = fill; autogrow(answerEl); }
+            answerEl.focus();
+        });
+
+        hintBtn.addEventListener('click', () => {
+            if (!current || !session.active || isFlashcardsMode()) return;
+            const rawVariants = variantsRaw(current.expect);
+            let cur = (answerEl.value || '').trim();
+
+            if (!cur) {
+                const v0 = rawVariants[0] || '';
+                if (v0) { answerEl.value = v0.slice(0, 1); autogrow(answerEl); }
+                return;
+            }
+
+            const curNorm = norm(cur);
+            for (const v of rawVariants) {
+                const vNorm = norm(v);
+                if (vNorm.startsWith(curNorm)) {
+                    if (cur.length < v.length) {
+                        answerEl.value = v.slice(0, cur.length + 1);
+                        autogrow(answerEl);
+                    }
+                    return;
+                }
+            }
+        });
+
+        checkBtn.addEventListener('click', check);
+        answerEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+
+        // ===== Kartičky – klik pro ukázání / další =====
+        function showFlashcard() {
+            if (!current) return;
+            if (flashcardEl.dataset.state !== 'shown') {
+                flashcardEl.dataset.state = 'shown';
+                flashcardEl.textContent = String(current.expect);
+            } else {
+                flashcardEl.dataset.state = '';
+                pickNext();                                  
+            }
+        }
+        flashcardEl.addEventListener('click', showFlashcard);
+        flashcardEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showFlashcard(); } });
+
+        // ===== Přenos nastavení do state =====
+        directionEl.addEventListener('change', () => { settings.direction = directionEl.value; saveJSON(KEY_SETTINGS, settings); });
+        targetCountEl.addEventListener('change', () => { settings.target = Math.max(1, parseInt(targetCountEl.value || '20', 10)); saveJSON(KEY_SETTINGS, settings); });
+        timedEl.addEventListener('change', () => { settings.timed = !!timedEl.checked; saveJSON(KEY_SETTINGS, settings); });
+        timeLimitEl.addEventListener('change', () => { settings.timeMin = Math.max(1, parseInt(timeLimitEl.value || '10', 10)); saveJSON(KEY_SETTINGS, settings); });
+
+        // ===== Počty v headeru =====
+        function refreshCounts() {
+            countInfoEl.textContent = `${WORDS.length} slov`;
+            filterInfoEl.textContent = `${filteredWords().length} vybráno`;
+        }
+
+        // ===== Inicializace =====
+        async function init() {
+            applyTheme();
+            directionEl.value = settings.direction;
+            modeEl.value = settings.mode;
+            targetCountEl.value = settings.target;
+            timedEl.checked = settings.timed; timeLimitEl.value = settings.timeMin;
+
+            try {
+                await loadWords();
+            } catch (err) {
+                console.error(err);
+                alert('Nepodařilo se načíst CSV: ' + err.message + '\nUjisti se, že běžíš přes http:// (ne file://) a že soubor existuje.');
+                setPracticeEnabled(false);
+                return;
+            }
+            renderLessons();
+            refreshCounts();
+            setPracticeEnabled(false);
+        }
+        init();
+    </script>
+</body>
+</html>
