@@ -8,8 +8,8 @@
 
     const DIFFICULTIES = {
         easy: { label: "Lehká", speed: 125, gapHeight: 225, gravity: 610, impulse: -310, spacing: 335, maxGapShift: 75 },
-        medium: { label: "Střední", speed: 160, gapHeight: 190, gravity: 790, impulse: -355, spacing: 310, maxGapShift: 90 },
-        hard: { label: "Těžká", speed: 185, gapHeight: 170, gravity: 900, impulse: -380, spacing: 290, maxGapShift: 90 }
+        medium: { label: "Střední", speed: 200, gapHeight: 170, gravity: 790, impulse: -355, spacing: 310, maxGapShift: 90 },
+        hard: { label: "Těžká", speed: 275, gapHeight: 130, gravity: 900, impulse: -380, spacing: 290, maxGapShift: 90 }
     };
     const HITBOX = { offsetX: 11, offsetY: 9, width: 50, height: 35 };
     const PLAYER = { width: 72, height: 54 };
