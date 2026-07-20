@@ -1,0 +1,238 @@
+.site-header {
+    padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(1.5rem, 4vw, 3rem);
+    text-align: center;
+}
+
+.site-header h1 {
+    margin-bottom: 0.5rem;
+    font-size: clamp(2.7rem, 9vw, 6rem);
+    color: var(--leaf-dark);
+    letter-spacing: -0.055em;
+    text-shadow: 0 0.08em 0 #fff, 0 0.13em 0 rgba(59, 134, 47, 0.18);
+}
+
+.site-header .intro {
+    margin-bottom: 0;
+    color: var(--muted-ink);
+    font-size: clamp(1.1rem, 2.8vw, 1.65rem);
+    font-weight: 700;
+}
+
+.game-house {
+    max-width: 55rem;
+}
+
+.house-visual {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #b8e6f2;
+    border: clamp(0.35rem, 1vw, 0.75rem) solid #fff;
+    border-radius: clamp(1rem, 3vw, 2.25rem);
+    box-shadow: var(--shadow);
+    isolation: isolate;
+}
+
+.house-image {
+    width: 100%;
+    height: auto;
+}
+
+.window-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.game-window {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 18%;
+    height: 11.5%;
+    padding: 0.6%;
+    overflow: hidden;
+    color: #163f50;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.7);
+    border: max(2px, 0.25vw) solid rgba(22, 63, 80, 0.62);
+    border-radius: 8%;
+    box-shadow: inset 0 0 1rem rgba(255, 255, 255, 0.75);
+}
+
+.game-window--robot {
+    top: 18.1%;
+    left: 30.3%;
+}
+
+.game-window--maze {
+    top: 18.1%;
+    left: 52.5%;
+}
+
+.game-window--crosswords {
+    top: 31.7%;
+    left: 30.3%;
+}
+
+.game-window--memory {
+    top: 31.7%;
+    left: 52.5%;
+}
+
+.game-window__icon {
+    font-size: clamp(0.85rem, 4.4vw, 2.5rem);
+    line-height: 1;
+}
+
+.game-window__name {
+    margin-top: 4%;
+    font-size: clamp(0.52rem, 2.2vw, 1.25rem);
+    font-weight: 900;
+    line-height: 1.05;
+}
+
+.game-window__status {
+    margin-top: 4%;
+    padding: 2% 6%;
+    color: #fff;
+    background: rgba(40, 99, 33, 0.9);
+    border-radius: 999px;
+    font-size: clamp(0.38rem, 1.45vw, 0.78rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.game-list-section {
+    padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+.section-heading {
+    max-width: 44rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+}
+
+.section-heading h2 {
+    margin-bottom: 0.75rem;
+    font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+.section-heading > p:last-child {
+    color: var(--muted-ink);
+}
+
+.game-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.game-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    background: rgba(255, 253, 243, 0.92);
+    border: 2px solid var(--line);
+    border-radius: 1.25rem;
+    box-shadow: 0 0.6rem 1.5rem rgba(35, 75, 49, 0.08);
+}
+
+.game-card__icon {
+    display: grid;
+    place-items: center;
+    width: 3.6rem;
+    height: 3.6rem;
+    background: var(--paper-soft);
+    border-radius: 1rem;
+    font-size: 2rem;
+}
+
+.game-card h3 {
+    margin-bottom: 0.35rem;
+    font-size: 1.35rem;
+}
+
+.game-card p {
+    margin-bottom: 0.8rem;
+    color: var(--muted-ink);
+}
+
+.status-badge {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    color: #fff;
+    background: var(--leaf-dark);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+}
+
+.site-footer {
+    padding: 1.5rem 0;
+    color: #fff;
+    text-align: center;
+    background: var(--ink);
+}
+
+.site-footer p {
+    margin: 0;
+}
+
+@media (max-width: 44rem) {
+    .shell {
+        width: min(100% - 1rem, 72rem);
+    }
+
+    .house-visual {
+        border-width: 0.3rem;
+        border-radius: 1rem;
+    }
+
+    .game-window {
+        width: 18.5%;
+        height: 11.8%;
+        padding: 0.3%;
+        border-width: 1px;
+    }
+
+    .game-window--robot,
+    .game-window--crosswords {
+        left: 30%;
+    }
+
+    .game-window__status {
+        display: none;
+    }
+
+    .game-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 24rem) {
+    .game-window__icon {
+        display: none;
+    }
+
+    .game-window__name {
+        margin-top: 0;
+        font-size: clamp(0.48rem, 2.6vw, 0.65rem);
+    }
+
+    .game-card {
+        grid-template-columns: 1fr;
+    }
+}
