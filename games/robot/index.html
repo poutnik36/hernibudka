@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#76b74b">
+    <meta name="description" content="Cesta robota – sestav program ze šipek a doveď robota po vyznačené trase do cíle.">
+    <title>Cesta robota · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="robot.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="robot.js" defer></script>
+</head>
+<body class="robot-page">
+    <a class="skip-link" href="#hra">Přeskočit ke hře</a>
+
+    <header class="game-header">
+        <div class="game-shell game-header__inner">
+            <a class="back-link" href="../../">← Zpět do budky</a>
+            <div>
+                <p class="eyebrow" aria-hidden="true">🤖 První patro</p>
+                <h1>Cesta robota</h1>
+                <p>Poskládej šipky tak, aby robot prošel po vyznačené cestě až ke hvězdě.</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="hra" class="game-shell robot-game">
+        <noscript>
+            <p class="game-message game-message--error">Pro spuštění hry je potřeba povolit JavaScript.</p>
+        </noscript>
+
+        <section class="game-toolbar" aria-labelledby="settings-heading">
+            <div>
+                <h2 id="settings-heading">Nová cesta</h2>
+                <p>Vyber obtížnost a nech si připravit trasu.</p>
+            </div>
+            <label class="difficulty-control" for="difficulty">
+                Obtížnost
+                <select id="difficulty" data-lockable>
+                    <option value="easy">Lehká · 5 × 5</option>
+                    <option value="medium">Střední · 6 × 6</option>
+                    <option value="hard">Těžká · 7 × 7</option>
+                </select>
+            </label>
+            <button class="button button--secondary" id="new-path" type="button" data-lockable>Další cesta</button>
+        </section>
+
+        <div class="game-layout">
+            <section class="board-card" aria-labelledby="board-heading">
+                <div class="card-heading">
+                    <div>
+                        <p class="step-label">1. Prohlédni si trasu</p>
+                        <h2 id="board-heading">Robotova mapa</h2>
+                    </div>
+                    <p id="route-info" class="route-info"></p>
+                </div>
+                <div id="robot-board" class="robot-board" role="grid" aria-label="Mřížka s vyznačenou trasou robota"></div>
+                <p class="board-legend"><span aria-hidden="true">●</span> Tečkovaná pole ukazují cestu od vlajky ke hvězdě.</p>
+            </section>
+
+            <section class="program-card" aria-labelledby="program-heading">
+                <div class="card-heading">
+                    <div>
+                        <p class="step-label">2. Sestav program</p>
+                        <h2 id="program-heading">Tvoje příkazy</h2>
+                    </div>
+                    <span id="command-count" class="command-count" aria-live="polite">0 příkazů</span>
+                </div>
+
+                <div class="direction-controls" aria-label="Přidat příkaz">
+                    <button class="direction-button direction-button--up" type="button" data-direction="up" data-lockable aria-label="Přidat příkaz nahoru"><span aria-hidden="true">↑</span><small>Nahoru</small></button>
+                    <button class="direction-button direction-button--left" type="button" data-direction="left" data-lockable aria-label="Přidat příkaz vlevo"><span aria-hidden="true">←</span><small>Vlevo</small></button>
+                    <button class="direction-button direction-button--down" type="button" data-direction="down" data-lockable aria-label="Přidat příkaz dolů"><span aria-hidden="true">↓</span><small>Dolů</small></button>
+                    <button class="direction-button direction-button--right" type="button" data-direction="right" data-lockable aria-label="Přidat příkaz vpravo"><span aria-hidden="true">→</span><small>Vpravo</small></button>
+                </div>
+
+                <div class="program-display" aria-label="Sestavený program">
+                    <ol id="program-list" class="program-list"></ol>
+                    <p id="empty-program" class="empty-program">Program je zatím prázdný. Přidej první šipku.</p>
+                </div>
+
+                <div class="edit-controls">
+                    <button class="button button--quiet" id="remove-command" type="button" data-lockable>↶ Odebrat poslední</button>
+                    <button class="button button--quiet" id="clear-program" type="button" data-lockable>Vymazat program</button>
+                </div>
+
+                <button class="button button--primary run-button" id="run-robot" type="button" data-lockable>▶ Spustit robota</button>
+
+                <div id="game-message" class="game-message" role="status" aria-live="assertive" aria-atomic="true">
+                    Cesta je připravená. Teď sestav program!
+                </div>
+
+                <details class="keyboard-help">
+                    <summary>Ovládání klávesnicí</summary>
+                    <p>Šipky přidávají příkazy, Backspace odebere poslední, Delete vše vymaže a Enter robota spustí.</p>
+                </details>
+            </section>
+        </div>
+    </main>
+
+    <footer class="game-footer">
+        <div class="game-shell">
+            <a href="../../">← Zpět do Herní budky</a>
+            <p>Herní budka · <span data-current-year>2026</span></p>
+        </div>
+    </footer>
+</body>
+</html>
