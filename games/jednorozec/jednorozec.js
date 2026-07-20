@@ -17,7 +17,22 @@
     const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, value));
 
     function createObstacle(id, x, gapTop, difficulty, variant = 0) {
-        return { id: `obstacle-${id}`, x, width: 104, gapTop, gapHeight: difficulty.gapHeight, counted: false, variant };
+        return { id: `obstacle-${id}`, x, width: 120, gapTop, gapHeight: difficulty.gapHeight, counted: false, variant };
+    }
+
+    function createCloudLayout(blockWidth, blockHeight, imageAspectRatio = 1.75, anchorAtEnd = false) {
+        const cloudWidth = blockWidth / 3;
+        const cloudHeight = cloudWidth / imageAspectRatio;
+        const horizontalStep = cloudWidth / 2;
+        const verticalStep = cloudHeight / 2;
+        const rowCount = Math.max(1, Math.ceil(Math.max(0, blockHeight - cloudHeight) / verticalStep) + 1);
+        const firstRowY = anchorAtEnd ? blockHeight - cloudHeight : 0;
+        return {
+            cloudWidth,
+            cloudHeight,
+            columns: Array.from({ length: 5 }, (_, index) => index * horizontalStep),
+            rows: Array.from({ length: rowCount }, (_, index) => firstRowY + (anchorAtEnd ? -1 : 1) * index * verticalStep)
+        };
     }
 
     function nextGapTop(previous, difficulty, height, random = Math.random) {
@@ -131,7 +146,7 @@
         return events;
     }
 
-    return { DIFFICULTIES, HITBOX, PLAYER, clamp, createObstacle, nextGapTop, createState, flap, getHitbox, rectanglesOverlap, hasCollision, updateTrail, step };
+    return { DIFFICULTIES, HITBOX, PLAYER, clamp, createObstacle, createCloudLayout, nextGapTop, createState, flap, getHitbox, rectanglesOverlap, hasCollision, updateTrail, step };
 });
 
 (function (root) {
@@ -300,37 +315,44 @@
         context.globalAlpha = 1;
     }
 
-    function drawCloudBlock(obstacle, y, height) {
+    function drawFallbackCloud(x, y, width, height, variant) {
+        context.fillStyle = variant ? "#f6a9ef" : "#ffffff";
+        context.strokeStyle = "#304a57";
+        context.lineWidth = Math.max(1, width * .035);
+        context.beginPath();
+        context.ellipse(x + width * .24, y + height * .62, width * .23, height * .3, 0, 0, Math.PI * 2);
+        context.ellipse(x + width * .5, y + height * .46, width * .3, height * .42, 0, 0, Math.PI * 2);
+        context.ellipse(x + width * .76, y + height * .62, width * .23, height * .3, 0, 0, Math.PI * 2);
+        context.fill();
+        context.stroke();
+    }
+
+    function drawCloudBlock(obstacle, y, height, anchorAtEnd) {
         if (height <= 0) return;
         const cloudImage = images.clouds[obstacle.variant];
-        if (cloudImage) {
-            context.save();
-            context.beginPath();
-            context.rect(obstacle.x, y, obstacle.width, height);
-            context.clip();
-            for (let cloudY = y; cloudY < y + height; cloudY += 70) context.drawImage(cloudImage, obstacle.x - 8, cloudY - 6, obstacle.width + 16, 82);
-            context.restore();
-            return;
-        }
-        context.fillStyle = obstacle.variant ? "#f7f1ff" : "#ffffff";
-        context.strokeStyle = "#a9c9da";
-        context.lineWidth = 3;
-        context.fillRect(obstacle.x + 12, y, obstacle.width - 24, height);
-        for (let cloudY = y + 18; cloudY < y + height + 24; cloudY += 42) {
-            for (let offset = 0; offset < 3; offset += 1) {
-                context.beginPath();
-                context.arc(obstacle.x + 18 + offset * 34, cloudY, 25, 0, Math.PI * 2);
-                context.fill();
-                context.stroke();
+        const aspectRatio = cloudImage?.naturalWidth && cloudImage?.naturalHeight ? cloudImage.naturalWidth / cloudImage.naturalHeight : 1.75;
+        const layout = core.createCloudLayout(obstacle.width, height, aspectRatio, anchorAtEnd);
+        context.save();
+        context.beginPath();
+        context.rect(obstacle.x, y, obstacle.width, height);
+        context.clip();
+        // Kreslení odzadu dopředu ponechá první obláček v řádku i u průletové hrany celý nahoře.
+        for (let row = layout.rows.length - 1; row >= 0; row -= 1) {
+            for (let column = layout.columns.length - 1; column >= 0; column -= 1) {
+                const cloudX = obstacle.x + layout.columns[column];
+                const cloudY = y + layout.rows[row];
+                if (cloudImage) context.drawImage(cloudImage, cloudX, cloudY, layout.cloudWidth, layout.cloudHeight);
+                else drawFallbackCloud(cloudX, cloudY, layout.cloudWidth, layout.cloudHeight, obstacle.variant);
             }
         }
+        context.restore();
     }
 
     function drawObstacles() {
         state.obstacles.forEach((obstacle) => {
-            drawCloudBlock(obstacle, 0, obstacle.gapTop);
+            drawCloudBlock(obstacle, 0, obstacle.gapTop, true);
             const bottomY = obstacle.gapTop + obstacle.gapHeight;
-            drawCloudBlock(obstacle, bottomY, state.height - bottomY);
+            drawCloudBlock(obstacle, bottomY, state.height - bottomY, false);
         });
     }
 
