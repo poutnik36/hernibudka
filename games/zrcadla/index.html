@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#173c33">
+    <meta name="description" content="Zrcadlové bludiště – natoč jednostranná zrcadla a doveď paprsek baterky až k cíli.">
+    <title>Zrcadlové bludiště · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="zrcadla.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="data/levels.js" defer></script>
+    <script src="zrcadla.js" defer></script>
+</head>
+<body class="mirror-page">
+    <a class="skip-link" href="#hra">Přeskočit ke hře</a>
+
+    <header class="mirror-header">
+        <div class="mirror-shell mirror-header__inner">
+            <a class="back-link" href="../../">← Zpět do budky</a>
+            <div>
+                <p class="eyebrow" aria-hidden="true">🪞 Šesté patro</p>
+                <h1>Zrcadlové bludiště</h1>
+                <p>Natoč jednostranná zrcadla tak, aby světelný paprsek našel cestu ke hvězdě.</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="hra" class="mirror-shell mirror-game">
+        <noscript><p class="game-message game-message--error">Pro spuštění hry je potřeba povolit JavaScript.</p></noscript>
+
+        <section class="game-toolbar" aria-labelledby="settings-heading">
+            <div>
+                <p class="step-label">Připrav pokus</p>
+                <h2 id="settings-heading">Vyber obtížnost</h2>
+            </div>
+            <label for="difficulty">Obtížnost
+                <select id="difficulty">
+                    <option value="easy">Lehká · 5 × 5</option>
+                    <option value="medium">Střední · 7 × 7</option>
+                    <option value="hard">Těžká · 9 × 9</option>
+                </select>
+            </label>
+            <button id="new-level" class="button button--secondary" type="button">Nová úloha</button>
+        </section>
+
+        <div class="mirror-layout">
+            <section class="board-card" aria-labelledby="board-heading">
+                <div class="board-heading">
+                    <div>
+                        <p class="step-label"><span id="difficulty-name">Lehká</span> · Pokus <span id="attempt-count">0</span></p>
+                        <h2 id="board-heading">Cesta světelného paprsku</h2>
+                    </div>
+                    <span class="mirror-legend"><i aria-hidden="true"></i> modrá = odrazová strana<br><b aria-hidden="true"></b> hnědá = zadní strana</span>
+                </div>
+
+                <svg id="mirror-board" class="mirror-board" viewBox="0 0 700 700" role="group" aria-label="Mřížka Zrcadlového bludiště s interaktivními zrcadly"></svg>
+
+                <div class="beam-actions">
+                    <button id="light-beam" class="button button--primary" type="button">🔦 Rozsviť baterku</button>
+                    <button id="stop-beam" class="button button--danger" type="button" disabled>Zastavit</button>
+                    <button id="retry-level" class="button button--quiet" type="button" disabled>Zkusit znovu</button>
+                </div>
+            </section>
+
+            <aside class="help-card" aria-labelledby="help-heading">
+                <p class="step-label">Jak na to?</p>
+                <h2 id="help-heading">Natoč zrcadla</h2>
+                <ol>
+                    <li>Kliknutím, dotykem nebo klávesou Enter zrcadlo otočíš.</li>
+                    <li><strong>Modrá strana</strong> odráží paprsek o pravý úhel.</li>
+                    <li><strong>Hnědá zadní strana</strong> paprsek zastaví.</li>
+                    <li>Až bude cesta připravená, rozsviť baterku.</li>
+                </ol>
+                <button id="hint-mirror" class="button button--hint" type="button">Ukázat malé vodítko</button>
+                <div id="game-status" class="game-message" role="status" aria-live="assertive" aria-atomic="true">Natoč zrcadla a potom rozsviť baterku.</div>
+                <details>
+                    <summary>Ovládání klávesnicí</summary>
+                    <p>Tabulátorem vyber zrcadlo. Enter nebo mezerník změní jeho stav. Potom tabulátorem přejdi na tlačítko Rozsviť baterku.</p>
+                </details>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="mirror-footer">
+        <div class="mirror-shell">
+            <a href="../../">← Zpět do Herní budky</a>
+            <p>Herní budka · <span data-current-year>2026</span></p>
+        </div>
+    </footer>
+</body>
+</html>
