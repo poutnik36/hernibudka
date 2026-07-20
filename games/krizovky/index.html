@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#76b74b">
+    <meta name="description" content="Dětské křížovky – doplň česká slova a odhal veselou tajenku.">
+    <title>Dětské křížovky · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="krizovky.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="data/words.js" defer></script>
+    <script src="data/puzzles.js" defer></script>
+    <script src="krizovky.js" defer></script>
+</head>
+<body class="crossword-page">
+    <a class="skip-link" href="#hra">Přeskočit ke křížovce</a>
+
+    <header class="crossword-header">
+        <div class="crossword-shell crossword-header__inner">
+            <a class="back-link" href="../../">← Zpět do budky</a>
+            <div>
+                <p class="eyebrow" aria-hidden="true">✏️ Třetí patro</p>
+                <h1>Dětské křížovky</h1>
+                <p>Doplň slova podle nápověd a objev veselou tajenku.</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="hra" class="crossword-shell crossword-game">
+        <noscript><p class="game-message game-message--error">Pro spuštění hry je potřeba povolit JavaScript.</p></noscript>
+
+        <section class="category-card" aria-labelledby="category-heading">
+            <div>
+                <p class="step-label">1. Vyber téma</p>
+                <h2 id="category-heading">Na co máš dnes chuť?</h2>
+            </div>
+            <div id="category-list" class="category-list" role="group" aria-label="Kategorie křížovek"></div>
+        </section>
+
+        <div class="crossword-layout">
+            <section class="puzzle-card" aria-labelledby="puzzle-heading">
+                <div class="card-heading">
+                    <div>
+                        <p id="puzzle-category" class="step-label"></p>
+                        <h2 id="puzzle-heading">Křížovka</h2>
+                    </div>
+                    <button id="new-puzzle" class="button button--secondary" type="button">Nová křížovka</button>
+                </div>
+
+                <div id="crossword-scroll" class="crossword-scroll" tabindex="0" aria-label="Herní mřížka; na menším displeji ji lze posouvat do stran">
+                    <div id="crossword-grid" class="crossword-grid" role="group" aria-label="Křížovka"></div>
+                </div>
+
+                <p class="keyboard-help"><strong>Tip:</strong> Piš rovnou písmena. Šipkami se pohybuješ po políčkách, Backspace smaže písmeno a vrátí se zpět.</p>
+
+                <div class="puzzle-actions" aria-label="Kontrola křížovky">
+                    <button id="check-word" class="button button--secondary" type="button">Zkontrolovat slovo</button>
+                    <button id="check-puzzle" class="button button--primary" type="button">Zkontrolovat křížovku</button>
+                    <button id="clear-puzzle" class="button button--quiet" type="button">Vymazat</button>
+                </div>
+            </section>
+
+            <aside class="clue-card" aria-labelledby="clues-heading">
+                <div>
+                    <p class="step-label">2. Vylušti slova</p>
+                    <h2 id="clues-heading">Nápovědy</h2>
+                </div>
+                <ol id="clue-list" class="clue-list"></ol>
+
+                <section class="secret-card" aria-labelledby="secret-heading">
+                    <p class="step-label">3. Tajenka</p>
+                    <h2 id="secret-heading">Co se skrývá ve žlutém sloupci?</h2>
+                    <p id="secret-prompt" class="secret-prompt"></p>
+                    <div id="secret-answer" class="secret-answer" aria-label="Skrytá tajenka"></div>
+                    <button id="secret-hint" class="button button--hint" type="button">Odkrýt písmeno</button>
+                </section>
+
+                <div id="game-message" class="game-message" role="status" aria-live="assertive" aria-atomic="true">Vyber si nápovědu a začni luštit.</div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="crossword-footer">
+        <div class="crossword-shell">
+            <a href="../../">← Zpět do Herní budky</a>
+            <p>Herní budka · <span data-current-year>2026</span></p>
+        </div>
+    </footer>
+</body>
+</html>
