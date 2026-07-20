@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#8ed8ff">
+    <meta name="description" content="Létající jednorožec – proleť mezi obláčky a nakresli na obloze duhu.">
+    <title>Létající jednorožec · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="jednorozec.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="jednorozec.js" defer></script>
+</head>
+<body class="unicorn-page">
+    <a class="skip-link" href="#hra">Přeskočit ke hře</a>
+
+    <header class="unicorn-header">
+        <div class="unicorn-shell unicorn-header__inner">
+            <a class="back-link" href="../../">← Zpět do budky</a>
+            <div>
+                <p class="eyebrow" aria-hidden="true">🌈 Páté patro</p>
+                <h1>Létající jednorožec</h1>
+                <p>Pomoz jednorožci proletět mezi obláčky a namalovat co nejdelší duhu.</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="hra" class="unicorn-shell unicorn-game">
+        <noscript><p class="game-message game-message--error">Pro spuštění hry je potřeba povolit JavaScript.</p></noscript>
+
+        <section class="game-toolbar" aria-labelledby="settings-heading">
+            <div>
+                <p class="step-label">Připrav si let</p>
+                <h2 id="settings-heading">Vyber obtížnost</h2>
+            </div>
+            <label for="difficulty">Obtížnost
+                <select id="difficulty">
+                    <option value="easy">Lehká · velké mezery</option>
+                    <option value="medium">Střední · svižný let</option>
+                    <option value="hard">Těžká · pro odvážné</option>
+                </select>
+            </label>
+            <button id="new-game" class="button button--secondary" type="button">Nová hra</button>
+        </section>
+
+        <section class="flight-card" aria-labelledby="flight-heading">
+            <div class="score-row">
+                <div><span>Skóre</span><strong id="score">0</strong></div>
+                <h2 id="flight-heading">Oblačná cesta</h2>
+                <div><span>Nejlepší</span><strong id="best-score">0</strong></div>
+            </div>
+
+            <div id="canvas-frame" class="canvas-frame">
+                <canvas id="game-canvas" width="800" height="500" tabindex="0" role="application" aria-label="Létající jednorožec. Mezerníkem nebo šipkou nahoru leť vzhůru a prolétej mezerami mezi obláčky.">
+                    Tvůj prohlížeč nepodporuje herní plochu canvas.
+                </canvas>
+
+                <div id="ready-overlay" class="game-overlay">
+                    <span class="overlay-icon" aria-hidden="true">🦄</span>
+                    <h2>Připraven na duhový let?</h2>
+                    <p>Klikni, klepni nebo stiskni <strong>mezerník</strong> či <strong>šipku nahoru</strong>. Každý povel zvedne jednorožce výš.</p>
+                    <button id="start-game" class="button button--primary button--large" type="button">Začít létat</button>
+                </div>
+
+                <div id="game-over-overlay" class="game-overlay" hidden>
+                    <span class="overlay-icon" aria-hidden="true">✨</span>
+                    <h2 id="game-over-heading">Krásný let!</h2>
+                    <p id="final-result">Získal jsi 0 bodů.</p>
+                    <button id="play-again" class="button button--primary button--large" type="button">Hrát znovu</button>
+                    <a class="button button--quiet" href="../../">Zpět do budky</a>
+                </div>
+            </div>
+
+            <div id="game-status" class="game-message" role="status" aria-live="assertive" aria-atomic="true">Vyber obtížnost a spusť hru.</div>
+            <p class="control-help"><strong>Ovládání:</strong> kliknutí nebo dotyk v herní ploše · mezerník · šipka nahoru · W</p>
+        </section>
+    </main>
+
+    <footer class="unicorn-footer">
+        <div class="unicorn-shell">
+            <a href="../../">← Zpět do Herní budky</a>
+            <p>Herní budka · <span data-current-year>2026</span></p>
+        </div>
+    </footer>
+</body>
+</html>
