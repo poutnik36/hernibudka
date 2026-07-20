@@ -1,0 +1,58 @@
+.unicorn-page { background: radial-gradient(circle at 88% 7%, rgba(246,201,255,.75), transparent 24rem), linear-gradient(180deg, #dff5ff, #fffdf3 40rem); }
+.unicorn-shell { width: min(100% - 2rem, 72rem); margin-inline: auto; }
+.unicorn-header { padding: 1.2rem 0 2.2rem; }
+.unicorn-header__inner { display: grid; gap: 1.3rem; }
+.unicorn-header h1 { margin-bottom: .45rem; font-size: clamp(2.1rem, 7vw, 4.2rem); }
+.unicorn-header p:last-child { margin: 0; color: var(--muted-ink); }
+.back-link { width: fit-content; color: var(--leaf-dark); font-weight: 900; }
+.unicorn-game { padding-bottom: 4rem; }
+.game-toolbar, .flight-card { padding: clamp(1rem, 3vw, 1.5rem); background: rgba(255,255,255,.95); border: 2px solid var(--line); border-radius: 1.35rem; box-shadow: var(--shadow); }
+.game-toolbar { display: grid; gap: 1rem; margin-bottom: 1rem; align-items: end; }
+.game-toolbar h2 { margin: 0; }
+.step-label { margin-bottom: .25rem; color: var(--leaf-dark); font-size: .8rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.game-toolbar label { display: grid; gap: .3rem; font-weight: 900; }
+.game-toolbar select { min-height: 3rem; padding: .6rem .8rem; color: var(--ink); background: #fff; border: 2px solid #8aa49c; border-radius: .7rem; font: inherit; }
+.button { display: inline-flex; min-height: 2.8rem; padding: .7rem 1rem; align-items: center; justify-content: center; border: 2px solid transparent; border-radius: .8rem; font: inherit; font-weight: 900; text-align: center; text-decoration: none; cursor: pointer; }
+.button--primary { color: #fff; background: var(--berry); }
+.button--secondary { color: var(--ink); background: var(--sun); border-color: #d7a91b; }
+.button--quiet { color: var(--ink); background: #fff; border-color: var(--line); }
+.button--large { min-width: min(100%, 13rem); min-height: 3.2rem; }
+.button:disabled, select:disabled { opacity: .55; cursor: not-allowed; }
+.score-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: .5rem; margin-bottom: .8rem; align-items: center; text-align: center; }
+.score-row h2 { margin: 0; font-size: clamp(1.05rem, 4vw, 1.6rem); }
+.score-row > div { display: grid; padding: .45rem; background: #f4f8dc; border-radius: .8rem; }
+.score-row span { color: var(--muted-ink); font-size: .72rem; font-weight: 900; text-transform: uppercase; }
+.score-row strong { font-size: clamp(1.4rem, 5vw, 2rem); }
+.canvas-frame { position: relative; width: 100%; overflow: hidden; background: #8ed8ff; border: 3px solid #fff; border-radius: 1rem; box-shadow: inset 0 0 0 2px rgba(23,60,51,.2); aspect-ratio: 8 / 5; isolation: isolate; }
+#game-canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.game-overlay { position: absolute; z-index: 2; inset: 0; display: grid; padding: clamp(.7rem, 3vw, 1.5rem); place-content: center; justify-items: center; color: var(--ink); background: rgba(255,253,243,.9); text-align: center; }
+.game-overlay[hidden] { display: none; }
+.game-overlay h2 { margin-bottom: .5rem; font-size: clamp(1.35rem, 5vw, 2.5rem); }
+.game-overlay p { max-width: 33rem; margin-bottom: 1rem; }
+.game-overlay .button + .button { margin-top: .6rem; }
+.overlay-icon { font-size: clamp(2.4rem, 8vw, 4.5rem); }
+.game-message { min-height: 3.4rem; padding: .8rem 1rem; margin-top: 1rem; background: #e9f4e2; border-left: 5px solid var(--leaf); border-radius: .6rem; font-weight: 800; }
+.game-message--point { background: #fff3bd; border-color: #d39d00; }
+.game-message--error { background: #ffe4e1; border-color: #891c26; }
+.control-help { margin: .8rem 0 0; color: var(--muted-ink); font-size: .9rem; text-align: center; }
+.unicorn-footer { padding: 2rem 0; color: var(--muted-ink); border-top: 1px solid var(--line); }
+.unicorn-footer .unicorn-shell { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+.unicorn-footer a { color: var(--leaf-dark); font-weight: 900; }
+.unicorn-footer p { margin: 0; }
+@media (min-width: 42rem) {
+    .unicorn-header__inner { grid-template-columns: auto 1fr; align-items: start; }
+    .game-toolbar { grid-template-columns: 1fr minmax(15rem, auto) auto; }
+}
+@media (max-width: 31rem) {
+    .unicorn-shell { width: min(100% - 1rem, 72rem); }
+    .flight-card { padding: .55rem; }
+    .game-overlay p { font-size: .8rem; line-height: 1.3; }
+    .control-help { font-size: .78rem; }
+}
+@media (max-width: 23rem) {
+    .score-row h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    .score-row { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .game-overlay { scroll-behavior: auto; }
+}
