@@ -1,0 +1,70 @@
+.mirror-page { background: radial-gradient(circle at 88% 7%, rgba(189,232,255,.8), transparent 24rem), linear-gradient(180deg, #e4f7cf, #fffdf3 42rem); }
+.mirror-shell { width: min(100% - 2rem, 76rem); margin-inline: auto; }
+.mirror-header { padding: 1.2rem 0 2.2rem; }
+.mirror-header__inner { display: grid; gap: 1.3rem; }
+.mirror-header h1 { margin-bottom: .45rem; font-size: clamp(2.1rem, 7vw, 4.2rem); }
+.mirror-header p:last-child { margin: 0; color: var(--muted-ink); }
+.back-link { width: fit-content; color: var(--leaf-dark); font-weight: 900; }
+.mirror-game { padding-bottom: 4rem; }
+.game-toolbar, .board-card, .help-card { padding: clamp(1rem, 3vw, 1.5rem); background: rgba(255,255,255,.96); border: 2px solid var(--line); border-radius: 1.35rem; box-shadow: var(--shadow); }
+.game-toolbar { display: grid; gap: 1rem; margin-bottom: 1rem; align-items: end; }
+.game-toolbar h2, .board-heading h2, .help-card h2 { margin: 0; }
+.step-label { margin-bottom: .25rem; color: var(--leaf-dark); font-size: .8rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.game-toolbar label { display: grid; gap: .3rem; font-weight: 900; }
+.game-toolbar select { min-height: 3rem; padding: .6rem .8rem; color: var(--ink); background: #fff; border: 2px solid #8aa49c; border-radius: .7rem; font: inherit; }
+.mirror-layout { display: grid; gap: 1rem; align-items: start; }
+.board-heading { display: flex; gap: 1rem; margin-bottom: .8rem; justify-content: space-between; align-items: center; }
+.mirror-legend { color: var(--muted-ink); font-size: .75rem; font-weight: 800; line-height: 1.6; }
+.mirror-legend i, .mirror-legend b { display: inline-block; width: 1.4rem; height: .35rem; margin-right: .25rem; vertical-align: middle; border-radius: 1rem; }
+.mirror-legend i { background: #39a9db; }
+.mirror-legend b { background: #725847; }
+.mirror-board { display: block; width: min(100%, 44rem); height: auto; margin-inline: auto; overflow: visible; background: #f3fbff; border: 2px solid #9db7c1; border-radius: 1rem; touch-action: manipulation; }
+.board-background { fill: #f3fbff; stroke: #bad4df; stroke-width: 2; }
+.grid-lines line { stroke: #aac4ce; stroke-width: 2; }
+.mirror-control { cursor: pointer; outline: none; touch-action: manipulation; }
+.mirror-hit { fill: rgba(255,255,255,.92); stroke: #617c87; stroke-width: 2; }
+.mirror-front { fill: none; stroke: #39a9db; stroke-linecap: round; stroke-width: 9; }
+.mirror-back { fill: none; stroke: #725847; stroke-linecap: round; stroke-width: 9; }
+.mirror-marker { fill: #173c33; font-size: 13px; font-weight: 900; pointer-events: none; }
+.mirror-control:focus-visible .mirror-hit { stroke: var(--berry); stroke-width: 5; }
+.mirror-control:hover .mirror-hit { fill: #fff8d7; }
+.mirror-control.is-locked { cursor: default; opacity: .72; }
+.mirror-control.is-locked .mirror-hit { stroke-dasharray: 4 3; }
+.mirror-control.is-hinted .mirror-hit { fill: #fff1a7; stroke: #d39d00; stroke-width: 6; }
+.mirror-board.is-locked .mirror-control { cursor: not-allowed; opacity: .78; }
+.source-marker circle { fill: #fff1a7; stroke: #d39d00; stroke-width: 3; }
+.target-marker circle { fill: #e1f5dc; stroke: #39863e; stroke-width: 3; }
+.beam-segment { stroke: #ffdf33; stroke-linecap: round; stroke-width: 8; filter: drop-shadow(0 0 5px #ff8f00); }
+.beam-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1rem; justify-content: center; }
+.button { display: inline-flex; min-height: 2.8rem; padding: .7rem 1rem; align-items: center; justify-content: center; border: 2px solid transparent; border-radius: .8rem; font: inherit; font-weight: 900; text-align: center; text-decoration: none; cursor: pointer; }
+.button--primary { color: #173c33; background: #ffdf33; border-color: #d39d00; }
+.button--secondary { color: var(--ink); background: var(--sun); border-color: #d7a91b; }
+.button--danger { color: #fff; background: #a3343e; }
+.button--quiet { color: var(--ink); background: #fff; border-color: var(--line); }
+.button--hint { color: #fff; background: var(--berry); }
+.button:disabled, select:disabled { opacity: .5; cursor: not-allowed; }
+.help-card ol { padding-left: 1.35rem; }
+.help-card li + li { margin-top: .55rem; }
+.game-message { min-height: 3.5rem; padding: .8rem 1rem; margin-top: 1rem; background: #e9f4e2; border-left: 5px solid var(--leaf); border-radius: .6rem; font-weight: 800; }
+.game-message--success { background: #e1f5dc; border-color: #39863e; }
+.game-message--error { background: #fff0dc; border-color: #bd6814; }
+.help-card details { margin-top: 1rem; color: var(--muted-ink); }
+.help-card summary { color: var(--ink); font-weight: 900; cursor: pointer; }
+.mirror-footer { padding: 2rem 0; color: var(--muted-ink); border-top: 1px solid var(--line); }
+.mirror-footer .mirror-shell { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; }
+.mirror-footer a { color: var(--leaf-dark); font-weight: 900; }
+.mirror-footer p { margin: 0; }
+@media (min-width: 44rem) {
+    .mirror-header__inner { grid-template-columns: auto 1fr; align-items: start; }
+    .game-toolbar { grid-template-columns: 1fr minmax(15rem, auto) auto; }
+    .mirror-layout { grid-template-columns: minmax(0, 1.55fr) minmax(17rem, .75fr); }
+}
+@media (max-width: 32rem) {
+    .mirror-shell { width: min(100% - 1rem, 76rem); }
+    .board-card { padding: .5rem; }
+    .board-heading { align-items: flex-start; flex-direction: column; padding: .5rem; }
+    .beam-actions .button { flex: 1 1 9rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mirror-control.is-hinted .mirror-hit { stroke-width: 4; }
+}

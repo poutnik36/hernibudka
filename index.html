@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#76b74b">
-    <meta name="description" content="Herní budka – veselé krátké hry pro děti. Zahraj si Cestu robota, Bludiště, Křížovky, Pexeso nebo Létajícího jednorožce.">
+    <meta name="description" content="Herní budka – šest veselých krátkých her pro děti včetně Létajícího jednorožce a Zrcadlového bludiště.">
     <title>Herní budka</title>
     <link rel="stylesheet" href="assets/css/shared.css">
-    <link rel="stylesheet" href="assets/css/home.css">
+    <link rel="stylesheet" href="assets/css/home.css?v=6">
     <script src="assets/js/shared.js" defer></script>
 </head>
 <body>
@@ -62,11 +62,11 @@
                         <span class="game-window__status">Hrát</span>
                     </a>
 
-                    <div class="game-window game-window--mirror" aria-hidden="true">
-                        <span class="game-window__icon">🪞</span>
+                    <a class="game-window game-window--mirror game-window--available" href="games/zrcadla/" aria-label="Hrát hru Zrcadlové bludiště">
+                        <span class="game-window__icon" aria-hidden="true">🪞</span>
                         <span class="game-window__name">Zrcadlové bludiště</span>
-                        <span class="game-window__status">Připravujeme</span>
-                    </div>
+                        <span class="game-window__status">Hrát</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -75,7 +75,7 @@
             <div class="section-heading">
                 <p class="eyebrow">Co najdeš uvnitř?</p>
                 <h2 id="game-list-heading">Vyber si hru</h2>
-                <p>Pět oken už je otevřených. Zrcadlové bludiště pro tebe právě připravujeme.</p>
+                <p>Všech šest oken je otevřených. Vyber si hru a pusť se do ní!</p>
             </div>
 
             <ul class="game-list">
@@ -124,7 +124,7 @@
                     <div>
                         <h3>Zrcadlové bludiště</h3>
                         <p>Objev tajemné chodby, ve kterých pohyb není vždy takový, jak čekáš.</p>
-                        <span class="status-badge">Připravujeme</span>
+                        <a class="play-link" href="games/zrcadla/">Hrát Zrcadlové bludiště</a>
                     </div>
                 </li>
             </ul>
