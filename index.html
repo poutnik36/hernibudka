@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#76b74b">
-    <meta name="description" content="Herní budka – veselé krátké hry pro děti. Cesta robota, bludiště, křížovky a pexeso připravujeme.">
+    <meta name="description" content="Herní budka – veselé krátké hry pro děti. Zahraj si Cestu robota; bludiště, křížovky a pexeso připravujeme.">
     <title>Herní budka</title>
     <link rel="stylesheet" href="assets/css/shared.css">
     <link rel="stylesheet" href="assets/css/home.css">
@@ -31,26 +31,26 @@
                     src="pozadi.png"
                     alt="Kreslená zelená herní budka s modrými okny v lese">
 
-                <div class="window-grid" aria-hidden="true">
-                    <div class="game-window game-window--robot">
-                        <span class="game-window__icon">🤖</span>
+                <div class="window-grid">
+                    <a class="game-window game-window--robot game-window--available" href="games/robot/" aria-label="Hrát hru Cesta robota">
+                        <span class="game-window__icon" aria-hidden="true">🤖</span>
                         <span class="game-window__name">Cesta robota</span>
-                        <span class="game-window__status">Připravujeme</span>
-                    </div>
+                        <span class="game-window__status">Hrát</span>
+                    </a>
 
-                    <div class="game-window game-window--maze">
+                    <div class="game-window game-window--maze" aria-hidden="true">
                         <span class="game-window__icon">🥕</span>
                         <span class="game-window__name">Bludiště</span>
                         <span class="game-window__status">Připravujeme</span>
                     </div>
 
-                    <div class="game-window game-window--crosswords">
+                    <div class="game-window game-window--crosswords" aria-hidden="true">
                         <span class="game-window__icon">✏️</span>
                         <span class="game-window__name">Křížovky</span>
                         <span class="game-window__status">Připravujeme</span>
                     </div>
 
-                    <div class="game-window game-window--memory">
+                    <div class="game-window game-window--memory" aria-hidden="true">
                         <span class="game-window__icon">🃏</span>
                         <span class="game-window__name">Pexeso</span>
                         <span class="game-window__status">Připravujeme</span>
@@ -63,7 +63,7 @@
             <div class="section-heading">
                 <p class="eyebrow">Co najdeš uvnitř?</p>
                 <h2 id="game-list-heading">Vyber si hru</h2>
-                <p>Na hrách právě pracujeme. Jakmile budou hotové, objeví se tu tlačítko pro spuštění.</p>
+                <p>Cesta robota už je otevřená. Další hry pro tebe právě připravujeme.</p>
             </div>
 
             <ul class="game-list">
@@ -72,7 +72,7 @@
                     <div>
                         <h3>Cesta robota</h3>
                         <p>Poskládej příkazy a pomoz robotovi dojít do cíle.</p>
-                        <span class="status-badge">Připravujeme</span>
+                        <a class="play-link" href="games/robot/">Hrát Cestu robota</a>
                     </div>
                 </li>
                 <li class="game-card">

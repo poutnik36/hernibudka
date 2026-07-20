@@ -63,6 +63,19 @@
     box-shadow: inset 0 0 1rem rgba(255, 255, 255, 0.75);
 }
 
+.game-window--available {
+    pointer-events: auto;
+    text-decoration: none;
+    cursor: pointer;
+    transition: filter 160ms ease, transform 160ms ease;
+}
+
+.game-window--available:hover,
+.game-window--available:focus-visible {
+    filter: brightness(1.08) saturate(1.15);
+    transform: scale(1.04);
+}
+
 .game-window--robot {
     top: 18.1%;
     left: 30.3%;
@@ -178,6 +191,25 @@
     font-weight: 900;
     letter-spacing: 0.03em;
     text-transform: uppercase;
+}
+
+.play-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.45rem 1rem;
+    color: #fff;
+    background: var(--leaf-dark);
+    border-radius: 999px;
+    font-weight: 900;
+    text-decoration: none;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.play-link:hover {
+    background: var(--leaf);
+    transform: translateY(-2px);
 }
 
 .site-footer {

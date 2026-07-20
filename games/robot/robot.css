@@ -1,0 +1,566 @@
+.robot-page {
+    --robot-blue: #198eb3;
+    --robot-blue-dark: #12637d;
+    --robot-orange: #e76f2e;
+    --robot-path: #fff1a8;
+    --robot-cell: #edf8f4;
+    background:
+        radial-gradient(circle at 90% 3%, rgba(25, 142, 179, 0.2), transparent 24rem),
+        radial-gradient(circle at 8% 25%, rgba(255, 212, 82, 0.3), transparent 21rem),
+        var(--paper);
+}
+
+.game-shell {
+    width: min(100% - 2rem, 78rem);
+    margin-inline: auto;
+}
+
+.game-header {
+    padding: clamp(1.25rem, 4vw, 3rem) 0;
+    border-bottom: 2px solid var(--line);
+    background: rgba(244, 248, 220, 0.8);
+}
+
+.game-header__inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(1.25rem, 4vw, 3rem);
+    align-items: start;
+}
+
+.game-header h1 {
+    margin-bottom: 0.45rem;
+    color: var(--robot-blue-dark);
+    font-size: clamp(2.25rem, 6vw, 4.75rem);
+    letter-spacing: -0.05em;
+}
+
+.game-header p:last-child {
+    max-width: 48rem;
+    margin-bottom: 0;
+    color: var(--muted-ink);
+    font-size: clamp(1rem, 2.1vw, 1.3rem);
+}
+
+.back-link,
+.game-footer a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0.45rem 0.85rem;
+    color: var(--leaf-dark);
+    background: #fff;
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    font-weight: 900;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.robot-game {
+    padding-block: clamp(1.5rem, 4vw, 3rem) clamp(3rem, 7vw, 6rem);
+}
+
+.game-toolbar,
+.board-card,
+.program-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid var(--line);
+    border-radius: 1.4rem;
+    box-shadow: 0 0.75rem 2rem rgba(35, 75, 49, 0.1);
+}
+
+.game-toolbar {
+    display: grid;
+    grid-template-columns: 1fr minmax(12rem, auto) auto;
+    gap: 1rem;
+    align-items: end;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    margin-bottom: 1.25rem;
+}
+
+.game-toolbar h2,
+.game-toolbar p {
+    margin-bottom: 0.2rem;
+}
+
+.game-toolbar p {
+    color: var(--muted-ink);
+}
+
+.difficulty-control {
+    display: grid;
+    gap: 0.35rem;
+    color: var(--muted-ink);
+    font-size: 0.88rem;
+    font-weight: 900;
+}
+
+.difficulty-control select {
+    min-height: 3rem;
+    padding: 0.45rem 2.4rem 0.45rem 0.75rem;
+    color: var(--ink);
+    background: #fff;
+    border: 2px solid var(--line);
+    border-radius: 0.75rem;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+.game-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(20rem, 0.95fr);
+    gap: 1.25rem;
+    align-items: start;
+}
+
+.board-card,
+.program-card {
+    min-width: 0;
+    padding: clamp(1rem, 3vw, 1.6rem);
+}
+
+.card-heading {
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.card-heading h2,
+.step-label {
+    margin-bottom: 0;
+}
+
+.step-label {
+    color: var(--robot-blue-dark);
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.route-info,
+.command-count {
+    flex: none;
+    margin: 0;
+    padding: 0.35rem 0.65rem;
+    color: var(--robot-blue-dark);
+    background: #e5f6fb;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
+.robot-board {
+    --grid-size: 5;
+    display: grid;
+    grid-template-columns: repeat(var(--grid-size), minmax(0, 1fr));
+    width: min(100%, 36rem);
+    aspect-ratio: 1;
+    gap: clamp(0.16rem, 0.6vw, 0.35rem);
+    padding: clamp(0.3rem, 1vw, 0.65rem);
+    margin-inline: auto;
+    background: var(--robot-blue-dark);
+    border: 3px solid var(--robot-blue-dark);
+    border-radius: 1rem;
+}
+
+.board-cell {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    place-items: center;
+    overflow: hidden;
+    background: var(--robot-cell);
+    border: 2px solid transparent;
+    border-radius: clamp(0.3rem, 1vw, 0.7rem);
+}
+
+.board-cell::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    width: 22%;
+    aspect-ratio: 1;
+    background: rgba(23, 60, 51, 0.12);
+    border-radius: 50%;
+}
+
+.board-cell--path {
+    background: var(--robot-path);
+    border-color: #d2a918;
+}
+
+.board-cell--path::before {
+    width: 30%;
+    background: #a97812;
+}
+
+.board-cell--visited {
+    background: #c9f1bd;
+    border-color: var(--leaf-dark);
+}
+
+.board-cell--current {
+    box-shadow: inset 0 0 0 4px var(--robot-orange);
+}
+
+.board-cell--error {
+    background: #ffd6d1;
+    border-color: #b63127;
+    animation: cell-shake 280ms ease-in-out;
+}
+
+.cell-marker,
+.theme-visual {
+    position: relative;
+    z-index: 2;
+}
+
+.cell-marker {
+    display: grid;
+    width: 68%;
+    aspect-ratio: 1;
+    place-items: center;
+    font-size: clamp(1rem, 5vw, 3.2rem);
+    line-height: 1;
+}
+
+.theme-visual {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    place-items: center;
+}
+
+.theme-visual__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.theme-visual__fallback {
+    line-height: 1;
+}
+
+.theme-visual__fallback[hidden],
+.theme-visual__image[hidden] {
+    display: none;
+}
+
+.robot-marker {
+    position: absolute;
+    z-index: 4;
+    width: 72%;
+    aspect-ratio: 1;
+    filter: drop-shadow(0 0.18rem 0.1rem rgba(23, 60, 51, 0.24));
+    transition: transform 180ms ease;
+}
+
+.board-legend {
+    margin: 0.9rem 0 0;
+    color: var(--muted-ink);
+    font-size: 0.88rem;
+    text-align: center;
+}
+
+.board-legend span {
+    color: #a97812;
+}
+
+.direction-controls {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas: ". up ." "left down right";
+    gap: 0.55rem;
+    max-width: 23rem;
+    margin: 0 auto 1rem;
+}
+
+.direction-button {
+    display: grid;
+    min-height: 4.6rem;
+    place-items: center;
+    padding: 0.35rem;
+    color: #fff;
+    background: var(--robot-blue);
+    border: 0;
+    border-bottom: 5px solid var(--robot-blue-dark);
+    border-radius: 0.9rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 900;
+    touch-action: manipulation;
+}
+
+.direction-button:hover:not(:disabled) {
+    background: #20a2cc;
+}
+
+.direction-button:active:not(:disabled) {
+    border-bottom-width: 2px;
+    transform: translateY(3px);
+}
+
+.direction-button span {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.direction-button small {
+    font-weight: 900;
+}
+
+.direction-button--up { grid-area: up; }
+.direction-button--left { grid-area: left; }
+.direction-button--down { grid-area: down; }
+.direction-button--right { grid-area: right; }
+
+.program-display {
+    min-height: 6.5rem;
+    padding: 0.75rem;
+    overflow-x: auto;
+    background: var(--paper-soft);
+    border: 2px dashed var(--line);
+    border-radius: 0.9rem;
+}
+
+.program-list {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.program-command {
+    position: relative;
+    display: grid;
+    flex: 0 0 3.25rem;
+    height: 4rem;
+    place-items: center;
+    color: var(--robot-blue-dark);
+    background: #fff;
+    border: 2px solid var(--robot-blue);
+    border-radius: 0.7rem;
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.program-command::after {
+    content: attr(data-step);
+    position: absolute;
+    top: 0.15rem;
+    left: 0.3rem;
+    color: var(--muted-ink);
+    font-size: 0.65rem;
+}
+
+.program-command--active {
+    color: #fff;
+    background: var(--robot-orange);
+    border-color: #a94115;
+    transform: translateY(-0.18rem);
+}
+
+.program-command--error {
+    color: #fff;
+    background: #b63127;
+    border-color: #7f211b;
+}
+
+.empty-program {
+    margin: 1.25rem 0;
+    color: var(--muted-ink);
+    text-align: center;
+}
+
+.edit-controls {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0.75rem 0;
+}
+
+.button {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 1rem;
+    border: 2px solid transparent;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 900;
+    touch-action: manipulation;
+}
+
+.button--primary {
+    color: #fff;
+    background: var(--leaf-dark);
+    border-color: var(--leaf-dark);
+}
+
+.button--primary:hover:not(:disabled) {
+    background: var(--leaf);
+}
+
+.button--secondary {
+    color: var(--robot-blue-dark);
+    background: #e5f6fb;
+    border-color: var(--robot-blue);
+}
+
+.button--quiet {
+    flex: 1;
+    color: var(--ink);
+    background: #fff;
+    border-color: var(--line);
+}
+
+.run-button {
+    width: 100%;
+    min-height: 3.75rem;
+    font-size: 1.1rem;
+}
+
+button:disabled,
+select:disabled {
+    cursor: not-allowed;
+    opacity: 0.52;
+}
+
+.game-message {
+    min-height: 4.5rem;
+    padding: 0.85rem 1rem;
+    margin-top: 0.85rem;
+    color: var(--robot-blue-dark);
+    background: #e5f6fb;
+    border: 2px solid var(--robot-blue);
+    border-radius: 0.9rem;
+    font-weight: 800;
+}
+
+.game-message--success {
+    color: #174f17;
+    background: #d9f5cf;
+    border-color: var(--leaf);
+}
+
+.game-message--error {
+    color: #721d17;
+    background: #ffe2de;
+    border-color: #b63127;
+}
+
+.keyboard-help {
+    margin-top: 0.9rem;
+    color: var(--muted-ink);
+    font-size: 0.88rem;
+}
+
+.keyboard-help summary {
+    cursor: pointer;
+    font-weight: 900;
+}
+
+.keyboard-help p {
+    margin: 0.45rem 0 0;
+}
+
+.game-footer {
+    padding: 1.5rem 0;
+    color: #fff;
+    background: var(--ink);
+}
+
+.game-footer .game-shell {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.game-footer p {
+    margin: 0;
+}
+
+@keyframes cell-shake {
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+@media (max-width: 58rem) {
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .robot-board {
+        max-width: 34rem;
+    }
+}
+
+@media (max-width: 42rem) {
+    .game-shell {
+        width: min(100% - 1rem, 78rem);
+    }
+
+    .game-header__inner,
+    .game-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .back-link {
+        width: max-content;
+    }
+
+    .game-toolbar .button {
+        width: 100%;
+    }
+
+    .board-card,
+    .program-card,
+    .game-toolbar {
+        border-radius: 1rem;
+    }
+
+    .robot-board {
+        gap: 0.16rem;
+        padding: 0.3rem;
+        border-width: 2px;
+    }
+
+    .board-cell {
+        border-width: 1px;
+    }
+
+    .cell-marker {
+        font-size: clamp(0.9rem, 8vw, 2.3rem);
+    }
+
+    .edit-controls,
+    .game-footer .game-shell {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .game-footer {
+        text-align: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .board-cell--error {
+        animation: none;
+    }
+
+    .robot-marker,
+    .game-window--available {
+        transition: none;
+    }
+}
