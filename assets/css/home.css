@@ -54,16 +54,10 @@
     align-items: center;
     justify-content: center;
     width: 18%;
-    height: 11.5%;
+    height: 10%;
     padding: 0.6%;
     overflow: hidden;
-    color: #163f50;
     text-align: center;
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.7);
-    border: max(2px, 0.25vw) solid rgba(22, 63, 80, 0.62);
-    border-radius: 8%;
-    box-shadow: inset 0 0 1rem rgba(255, 255, 255, 0.75);
     pointer-events: none;
 }
 
@@ -83,32 +77,32 @@
 }
 
 .game-window--robot {
-    top: 18.1%;
+    top: 17.9%;
     left: 30.3%;
 }
 
 .game-window--maze {
-    top: 18.1%;
+    top: 17.9%;
     left: 52.5%;
 }
 
 .game-window--crosswords {
-    top: 31.7%;
+    top: 31.5%;
     left: 30.3%;
 }
 
 .game-window--memory {
-    top: 31.7%;
+    top: 31.5%;
     left: 52.5%;
 }
 
 .game-window--unicorn {
-    top: 47.1%;
+    top: 45.5%;
     left: 30.3%;
 }
 
 .game-window--mirror {
-    top: 47.1%;
+    top: 45.5%;
     left: 52.5%;
 }
 
