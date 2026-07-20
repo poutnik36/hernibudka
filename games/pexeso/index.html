@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#76b74b">
+    <meta name="description" content="Pexeso pro dva hráče – vyberte balíček a najděte všechny dvojice.">
+    <title>Pexeso pro dva · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="pexeso.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="data/packs.js" defer></script>
+    <script src="pexeso.js" defer></script>
+</head>
+<body class="memory-page">
+    <a class="skip-link" href="#hra">Přeskočit ke hře</a>
+
+    <header class="memory-header">
+        <div class="memory-shell memory-header__inner">
+            <a class="back-link" href="../../">← Zpět do budky</a>
+            <div>
+                <p class="eyebrow" aria-hidden="true">🃏 Čtvrté patro</p>
+                <h1>Pexeso pro dva</h1>
+                <p>Střídejte se, hledejte stejné obrázky a nasbírejte nejvíc dvojic.</p>
+            </div>
+        </div>
+    </header>
+
+    <main id="hra" class="memory-shell memory-game">
+        <noscript><p class="memory-message memory-message--error">Pro spuštění hry je potřeba povolit JavaScript.</p></noscript>
+
+        <section id="setup-panel" class="setup-card" aria-labelledby="setup-heading">
+            <div class="section-heading">
+                <p class="step-label">Připravte hru</p>
+                <h2 id="setup-heading">Kdo si dnes zahraje?</h2>
+                <p>Jména můžete změnit, nebo rovnou použít výchozí.</p>
+            </div>
+
+            <div class="player-inputs">
+                <label for="player-one">Jméno prvního hráče
+                    <input id="player-one" type="text" maxlength="24" value="Hráč 1" autocomplete="off">
+                </label>
+                <label for="player-two">Jméno druhého hráče
+                    <input id="player-two" type="text" maxlength="24" value="Hráč 2" autocomplete="off">
+                </label>
+            </div>
+
+            <fieldset>
+                <legend>Vyberte balíček</legend>
+                <div id="pack-options" class="choice-grid choice-grid--packs"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Vyberte velikost</legend>
+                <div id="size-options" class="choice-grid choice-grid--sizes"></div>
+            </fieldset>
+
+            <p id="setup-error" class="setup-error" role="alert"></p>
+            <button id="start-game" class="button button--primary button--large" type="button">Spustit pexeso</button>
+        </section>
+
+        <section id="play-panel" class="play-panel" aria-labelledby="board-heading" hidden>
+            <div class="scoreboard">
+                <div id="player-card-0" class="player-score" aria-current="true">
+                    <span id="player-name-0" class="player-score__name">Hráč 1</span>
+                    <strong><span id="player-score-0">0</span> dvojic</strong>
+                </div>
+                <div class="turn-info">
+                    <span>Na tahu</span>
+                    <strong id="current-player">Hráč 1</strong>
+                    <span>Zbývá <b id="remaining-pairs">0</b> dvojic</span>
+                </div>
+                <div id="player-card-1" class="player-score" aria-current="false">
+                    <span id="player-name-1" class="player-score__name">Hráč 2</span>
+                    <strong><span id="player-score-1">0</span> dvojic</strong>
+                </div>
+            </div>
+
+            <div class="board-heading">
+                <div>
+                    <p id="pack-title" class="step-label"></p>
+                    <h2 id="board-heading">Najděte stejné dvojice</h2>
+                </div>
+                <button id="new-game" class="button button--secondary" type="button">Nová hra</button>
+            </div>
+
+            <div id="memory-board" class="memory-board" role="grid" aria-label="Karty pexesa"></div>
+            <div id="game-status" class="memory-message" role="status" aria-live="assertive" aria-atomic="true">Otočte první kartu.</div>
+        </section>
+
+        <section id="result-panel" class="result-card" aria-labelledby="result-heading" hidden>
+            <span class="result-icon" aria-hidden="true">🏆</span>
+            <p class="step-label">Všechny dvojice nalezeny</p>
+            <h2 id="result-heading">Výborná hra!</h2>
+            <p id="result-text"></p>
+            <div class="result-scores">
+                <span id="result-player-0"></span>
+                <span id="result-player-1"></span>
+            </div>
+            <div class="result-actions">
+                <button id="play-again" class="button button--primary" type="button">Hrát znovu</button>
+                <button id="change-game" class="button button--secondary" type="button">Změnit nastavení</button>
+                <a class="button button--quiet" href="../../">Zpět do budky</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="memory-footer">
+        <div class="memory-shell">
+            <a href="../../">← Zpět do Herní budky</a>
+            <p>Herní budka · <span data-current-year>2026</span></p>
+        </div>
+    </footer>
+</body>
+</html>
