@@ -19,10 +19,10 @@
         3: { left: "up", down: "right", right: "blocked", up: "blocked" }
     };
     const STATE_DESCRIPTIONS = {
-        0: "lomítko, odrazová strana pro paprsek zprava nebo zdola",
-        1: "lomítko, odrazová strana pro paprsek zleva nebo shora",
-        2: "obrácené lomítko, odrazová strana pro paprsek zprava nebo shora",
-        3: "obrácené lomítko, odrazová strana pro paprsek zleva nebo zdola"
+        0: "lomítko, odrazová strana pro paprsek přicházející zleva nebo shora",
+        1: "lomítko, odrazová strana pro paprsek přicházející zprava nebo zdola",
+        2: "obrácené lomítko, odrazová strana pro paprsek přicházející zleva nebo zdola",
+        3: "obrácené lomítko, odrazová strana pro paprsek přicházející zprava nebo shora"
     };
     const DIFFICULTIES = {
         easy: { label: "Lehká", size: 5, turns: 2, falseMirrors: 0, maxAttempts: 20 },
@@ -186,9 +186,21 @@
         return mirror.state;
     }
 
+    function getMirrorVisual(state) {
+        return {
+            slash: state < 2,
+            frontOffset: {
+                0: { x: -4, y: -4 },
+                1: { x: 4, y: 4 },
+                2: { x: -4, y: 4 },
+                3: { x: 4, y: -4 }
+            }[state]
+        };
+    }
+
     return {
         DIRECTIONS, MIRROR_TRANSITIONS, STATE_DESCRIPTIONS, DIFFICULTIES,
-        simulateBeam, stateForTurn, enumerateSolutions, buildCandidate, generateLevel, cloneLevel, cycleMirror
+        simulateBeam, stateForTurn, enumerateSolutions, buildCandidate, generateLevel, cloneLevel, cycleMirror, getMirrorVisual
     };
 });
 
@@ -264,11 +276,10 @@
         const marker = svgElement("text", { class: "mirror-marker", x: "0", y: "5", "text-anchor": "middle", "aria-hidden": "true" });
 
         function updateShape() {
-            const slash = mirror.state < 2;
-            const frontFirst = mirror.state === 0 || mirror.state === 2;
+            const visual = core.getMirrorVisual(mirror.state);
+            const slash = visual.slash;
             const line = slash ? { x1: -18, y1: 18, x2: 18, y2: -18 } : { x1: -18, y1: -18, x2: 18, y2: 18 };
-            const offset = frontFirst ? -4 : 4;
-            const perpendicular = slash ? { x: offset, y: offset } : { x: -offset, y: offset };
+            const perpendicular = visual.frontOffset;
             front.setAttribute("d", `M ${line.x1 + perpendicular.x} ${line.y1 + perpendicular.y} L ${line.x2 + perpendicular.x} ${line.y2 + perpendicular.y}`);
             back.setAttribute("d", `M ${line.x1 - perpendicular.x} ${line.y1 - perpendicular.y} L ${line.x2 - perpendicular.x} ${line.y2 - perpendicular.y}`);
             marker.textContent = slash ? "/" : "\\";
