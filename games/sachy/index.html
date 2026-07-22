@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#769656">
+    <title>Šachy · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css">
+    <link rel="stylesheet" href="sachy.css">
+    <script src="../../assets/js/shared.js" defer></script>
+    <script type="module" src="sachy.js"></script>
+  </head>
+  <body>
+    <header class="shell"><a href="../../">← Zpět do budky</a><p class="eyebrow">♟️ Desáté patro</p><h1>Šachy</h1><p>Klasická královská hra pro dva nebo proti skriptu.</p></header>
+    <main class="shell">
+      <section id="setup" class="panel"><h2>Nová partie</h2><div class="settings"><label>Jméno bílého<input id="white-name" maxlength="24" value="Bílý hráč"></label><label>Jméno černého<input id="black-name" maxlength="24" value="Černý hráč"></label><label>Režim<select id="mode"><option value="human">Člověk proti člověku</option><option value="ai">Člověk proti skriptu</option></select></label><label>Obtížnost<select id="difficulty" disabled><option value="easy">Lehká</option><option value="medium" selected>Střední</option><option value="hard">Těžká</option></select></label><label>Moje barva<select id="human-color" disabled><option value="w">Bílá</option><option value="b">Černá</option><option value="random">Náhodná</option></select></label></div><button id="start" class="button primary">Rozehrát partii</button></section>
+      <section id="game" class="panel game" hidden>
+        <div class="players"><strong id="black-player"></strong><span id="turn"></span><strong id="white-player"></strong></div>
+        <div id="board" class="board" role="grid" aria-label="Šachovnice"></div>
+        <p id="status" class="status" role="status" aria-live="assertive"></p>
+        <div class="side"><h2>Historie tahů</h2><ol id="history" class="history"></ol></div>
+        <div class="actions"><button id="again" class="button primary">Hrát znovu</button><button id="resign" class="button secondary">Vzdát partii</button><button id="settings" class="button quiet">Nové nastavení</button><a href="../../" class="button quiet">Zpět do budky</a></div>
+      </section>
+    </main>
+    <dialog id="promotion" aria-labelledby="promotion-title"><h2 id="promotion-title">Vyber proměnu pěšce</h2><div class="promotion-choices"><button data-piece="q">Dáma</button><button data-piece="r">Věž</button><button data-piece="b">Střelec</button><button data-piece="n">Jezdec</button></div></dialog>
+  </body>
+</html>
