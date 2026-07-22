@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Piškvorky · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css" />
+    <link rel="stylesheet" href="piskvorky.css" />
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="piskvorky.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <div class="shell">
+        <a href="../../">← Zpět do budky</a>
+        <p class="eyebrow">❌ Osmé patro</p>
+        <h1>Piškvorky</h1>
+        <p>Slož pět křížků nebo koleček do jedné řady.</p>
+      </div>
+    </header>
+    <main class="shell">
+      <section id="setup" class="panel">
+        <h2>Nová série</h2>
+        <div class="settings">
+          <label
+            >Hráč X<input id="name-x" value="Hráč X" maxlength="24" /></label
+          ><label
+            >Hráč O<input id="name-o" value="Hráč O" maxlength="24" /></label
+          ><label
+            >Režim<select id="mode">
+              <option value="human">Člověk proti člověku</option>
+              <option value="ai">Člověk proti skriptu</option>
+            </select></label
+          ><label
+            >Obtížnost<select id="difficulty" disabled>
+              <option value="easy">Lehká</option>
+              <option value="medium">Střední</option>
+              <option value="hard">Těžká</option>
+            </select></label
+          ><label
+            >Velikost<select id="size">
+              <option value="10">Malá 10 × 10</option>
+              <option value="15">Střední 15 × 15</option>
+              <option value="20">Velká 20 × 20</option>
+            </select></label
+          >
+        </div>
+        <button id="start" class="button primary">Spustit hru</button>
+      </section>
+      <section id="game" class="panel" hidden>
+        <div class="score">
+          <strong id="score-x"></strong><strong id="turn"></strong
+          ><strong id="score-o"></strong><span id="draws"></span>
+        </div>
+        <div class="board-scroll">
+          <div id="board" class="board" role="grid"></div>
+        </div>
+        <div
+          id="status"
+          class="status"
+          role="status"
+          aria-live="assertive"
+        ></div>
+        <div class="actions">
+          <button id="again" class="button primary">Hrát znovu</button
+          ><button id="reset-score" class="button secondary">
+            Vynulovat skóre</button
+          ><button id="settings" class="button quiet">Nové nastavení</button
+          ><a href="../../" class="button quiet">Zpět do budky</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

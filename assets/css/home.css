@@ -111,6 +111,11 @@
     left: 30.3%;
 }
 
+.game-window--tic-tac-toe {
+    top: 59.8%;
+    left: 52.5%;
+}
+
 .game-window__icon {
     font-size: clamp(0.85rem, 4.4vw, 2.5rem);
     line-height: 1;
