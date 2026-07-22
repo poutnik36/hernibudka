@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#4f9b45" />
+    <title>Had · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css" />
+    <link rel="stylesheet" href="had.css" />
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/levels.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="had.js" defer></script>
+  </head>
+  <body>
+    <header class="shell">
+      <a href="../../">← Zpět do budky</a>
+      <p class="eyebrow">🐍 Deváté patro</p>
+      <h1>Had</h1>
+      <p>Sbírej kuličky, rostni a vyhni se překážkám.</p>
+    </header>
+    <main class="shell">
+      <section id="setup" class="panel">
+        <h2>Nová hra</h2>
+        <div class="settings">
+          <label
+            >Obtížnost<select id="difficulty">
+              <option value="easy">Lehká</option>
+              <option value="medium" selected>Střední</option>
+              <option value="hard">Těžká</option>
+            </select></label
+          ><label>Level<select id="level"></select></label>
+        </div>
+        <p>
+          Ovládej hada šipkami, WASD, přejetím prstu nebo tlačítky. Hru můžeš
+          kdykoli pozastavit.
+        </p>
+        <button id="start" class="button primary">Spustit hru</button>
+      </section>
+      <section id="game" class="panel" hidden>
+        <div class="stats">
+          <strong id="score">Skóre: 0</strong
+          ><strong id="best">Rekord: 0</strong><span id="level-name"></span
+          ><span id="difficulty-name"></span
+          ><span id="to-bonus">Do bonusu: 5</span>
+        </div>
+        <div class="bonus" aria-label="Zbývající čas bonusu">
+          <span id="bonus-bar"></span>
+        </div>
+        <div
+          id="canvas-wrap"
+          class="canvas-wrap"
+          tabindex="0"
+          aria-label="Herní plocha Hada"
+        >
+          <canvas id="board" width="900" height="600"></canvas>
+        </div>
+        <p id="status" class="status" role="status" aria-live="assertive">
+          Připraveno.
+        </p>
+        <div class="controls" aria-label="Směrové ovládání">
+          <button data-direction="up" aria-label="Nahoru">▲</button
+          ><button data-direction="left" aria-label="Doleva">◀</button
+          ><button data-direction="down" aria-label="Dolů">▼</button
+          ><button data-direction="right" aria-label="Doprava">▶</button>
+        </div>
+        <div class="actions">
+          <button id="pause" class="button secondary">Pauza</button
+          ><button id="restart" class="button primary">Hrát znovu</button
+          ><button id="settings" class="button quiet">Nové nastavení</button
+          ><a href="../../" class="button quiet">Zpět do budky</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
