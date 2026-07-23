@@ -91,13 +91,7 @@
         } else {
           const home = next - 40;
           if (home > 3) continue;
-          if (
-            player.pawns.some(
-              (x) =>
-                x.id !== pawn.id && x.state === "home" && x.homeIndex === home,
-            )
-          )
-            continue;
+          if (!homePathIsClear(player, pawn.id, 0, home)) continue;
           moves.push(
             makeMove(state, player, pawn, "home", home, {
               entersHome: true,
@@ -107,13 +101,8 @@
         }
       } else if (pawn.state === "home") {
         const home = pawn.homeIndex + dice;
-        if (
-          home > 3 ||
-          player.pawns.some(
-            (x) =>
-              x.id !== pawn.id && x.state === "home" && x.homeIndex === home,
-          )
-        )
+        if (home > 3) continue;
+        if (!homePathIsClear(player, pawn.id, pawn.homeIndex + 1, home))
           continue;
         moves.push(
           makeMove(state, player, pawn, "home", home, { finishes: home === 3 }),
@@ -121,6 +110,33 @@
       }
     }
     return moves;
+  }
+  function homePathIsClear(player, pawnId, firstIndex, lastIndex) {
+    return !player.pawns.some(
+      (other) =>
+        other.id !== pawnId &&
+        other.state === "home" &&
+        other.homeIndex >= firstIndex &&
+        other.homeIndex <= lastIndex,
+    );
+  }
+  function recordRoll(state, value) {
+    state.rollAttempts++;
+    state.consecutiveSixes = value === 6 ? state.consecutiveSixes + 1 : 0;
+  }
+  function canRetryFromBase(state, player, value) {
+    return (
+      value !== 6 &&
+      state.rollAttempts < 3 &&
+      player.pawns.every((pawn) => pawn.state === "base")
+    );
+  }
+  function getsExtraRoll(state, player) {
+    return (
+      !state.ranking.includes(player.id) &&
+      state.diceValue === 6 &&
+      state.consecutiveSixes < 3
+    );
   }
   function makeMove(state, player, pawn, toState, value, flags = {}) {
     const fromSteps = pawn.trackSteps;
@@ -222,6 +238,8 @@
       currentPlayerIndex: 0,
       diceValue: null,
       extraRoll: false,
+      rollAttempts: 0,
+      consecutiveSixes: 0,
       ranking: [],
       taskFieldIndexes: [],
       usedTaskIds: [],
@@ -248,6 +266,10 @@
     nextPlayer,
     createGame,
     danger,
+    homePathIsClear,
+    recordRoll,
+    canRetryFromBase,
+    getsExtraRoll,
   };
 });
 
@@ -641,15 +663,29 @@
           cx: p.x + offset,
           cy: p.y + offset,
           r: 23,
-          class: `pawn-hitbox ${isLegal ? "legal" : ""}`,
+          class: "pawn-hitbox",
         });
-        const t = svg("text", {
-          x: p.x + offset,
-          y: p.y + offset + 4,
-          class: "pawn-label",
-        });
-        t.textContent = i + 1;
-        g.append(c, hitbox, t);
+        g.append(c);
+        if (isLegal) {
+          g.append(
+            svg("line", {
+              x1: p.x + offset - 17,
+              x2: p.x + offset + 17,
+              y1: p.y + offset + 26,
+              y2: p.y + offset + 26,
+              class: "pawn-legal-line pawn-legal-line-back",
+            }),
+            svg("line", {
+              x1: p.x + offset - 17,
+              x2: p.x + offset + 17,
+              y1: p.y + offset + 26,
+              y2: p.y + offset + 26,
+              class: "pawn-legal-line",
+              stroke: player.color,
+            }),
+          );
+        }
+        g.append(hitbox);
         if (isLegal) {
           const go = () => selectPawn(pawn.id);
           g.addEventListener("pointerup", go);
@@ -693,7 +729,7 @@
   function current() {
     return state.players[state.currentPlayerIndex];
   }
-  function beginTurn() {
+  function beginTurn(resetCounters = true, message = null) {
     if (state.ranking.length === state.players.length) {
       finish();
       return;
@@ -701,11 +737,15 @@
     legal = [];
     state.phase = "waitingForRoll";
     busy = false;
+    if (resetCounters) {
+      state.rollAttempts = 0;
+      state.consecutiveSixes = 0;
+    }
     const p = current();
     e.turn.textContent = p.name;
     e.roll.disabled = !p.human;
     e.dice.disabled = !p.human;
-    e.status.textContent = `${p.name} hází kostkou.`;
+    e.status.textContent = message || `${p.name} hází kostkou.`;
     render();
     if (!p.human) setTimeout(roll, 650);
   }
@@ -718,6 +758,7 @@
       value = p.human
         ? 1 + Math.floor(Math.random() * 6)
         : A.weightedRoll(p.difficulty);
+    C.recordRoll(state, value);
     state.diceValue = value;
     showDice(value);
     e.status.textContent = `${p.name} hodil/a ${value}.`;
@@ -726,7 +767,19 @@
       busy = false;
       if (!legal.length) {
         e.status.textContent += " Není možný žádný tah.";
-        setTimeout(endTurn, 700);
+        if (C.canRetryFromBase(state, p, value)) {
+          const remaining = 3 - state.rollAttempts;
+          setTimeout(
+            () =>
+              beginTurn(
+                false,
+                `${p.name} nemá figurku ve hře a hází znovu. Zbývá ${remaining} ${remaining === 1 ? "pokus" : "pokusy"}.`,
+              ),
+            700,
+          );
+        } else {
+          setTimeout(endTurn, 700);
+        }
       } else if (!p.human) {
         const m = A.chooseMove(legal, p.difficulty);
         setTimeout(() => selectPawn(m.pawnId), 500);
@@ -799,10 +852,19 @@
   function endTurn() {
     busy = false;
     const p = current();
-    if (state.ranking.includes(p.id) || state.diceValue !== 6)
+    const getsExtraRoll = C.getsExtraRoll(state, p);
+    if (!getsExtraRoll) {
       C.nextPlayer(state);
+    }
     state.diceValue = null;
-    beginTurn();
+    if (getsExtraRoll) {
+      beginTurn(
+        false,
+        `${p.name} hodil/a šestku a hází znovu (${state.consecutiveSixes}/3).`,
+      );
+    } else {
+      beginTurn(true);
+    }
   }
   function finish() {
     e.ranking.replaceChildren();

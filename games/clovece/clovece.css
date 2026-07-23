@@ -162,24 +162,16 @@ fieldset label {
 }
 .pawn-hitbox {
   fill: transparent;
-  stroke: #173c33;
-  stroke-width: 2;
+  stroke: none;
 }
-.pawn-hitbox.legal {
-  cursor: pointer;
-  stroke: #fff;
-  stroke-width: 6;
-  filter: drop-shadow(0 0 6px #8c3a88);
-}
-.pawn-label {
-  fill: #fff;
-  font-size: 12px;
-  font-weight: 900;
-  text-anchor: middle;
+.pawn-legal-line {
   pointer-events: none;
-  paint-order: stroke;
-  stroke: #173c33;
-  stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+.pawn-legal-line-back {
+  stroke: #fff;
+  stroke-width: 10;
 }
 .center {
   fill: #fff3bd;
