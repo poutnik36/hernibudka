@@ -1,6 +1,103 @@
-<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#76b74b"><title>Člověče, nezlob se · Herní budka</title><link rel="stylesheet" href="../../assets/css/shared.css"><link rel="stylesheet" href="clovece.css"><script src="../../assets/js/shared.js" defer></script><script src="data/themes.js" defer></script><script src="data/tasks.js" defer></script><script src="ai.js" defer></script><script src="clovece.js" defer></script></head>
-<body><a class="skip-link" href="#hra">Přeskočit ke hře</a><header class="ludo-header"><div class="shell"><a href="../../" class="back">← Zpět do budky</a><p class="eyebrow">🎲 Sedmé patro</p><h1>Člověče, nezlob se</h1><p>Vyveď všechny čtyři figurky ze základny a dostaň je bezpečně domů.</p></div></header>
-<main id="hra" class="shell ludo-main"><section id="setup" class="panel"><h2>Nastavení hráčů</h2><div id="players-setup" class="players-setup"></div><fieldset><legend>Režim</legend><label><input type="radio" name="mode" value="normal" checked> Běžná hra</label><label id="tasks-label"><input type="radio" name="mode" value="tasks"> Hra s dětskými úkoly</label><p id="tasks-help"></p></fieldset><p id="setup-error" class="error" role="alert"></p><button id="start" class="button primary">Spustit hru</button></section>
-<section id="game" hidden><div class="game-grid"><section class="board-panel"><div class="turn"><div><span>Na tahu</span><strong id="turn-name"></strong></div><button id="dice" class="dice" type="button" aria-label="Hodit kostkou">⚄</button><button id="roll" class="button primary" type="button">Hodit kostkou</button></div><svg id="board" viewBox="0 0 660 660" role="group" aria-label="Deska hry Člověče, nezlob se"></svg><div class="actions"><button id="new" class="button secondary">Nová hra</button><a class="button quiet" href="../../">Zpět do budky</a></div></section><aside class="panel"><h2>Hráči</h2><ol id="scoreboard"></ol><div id="status" class="status" role="status" aria-live="assertive">Hra je připravená.</div></aside></div></section></main>
-<dialog id="task-dialog"><form method="dialog"><p class="eyebrow">Úkol pro <span id="task-player"></span></p><h2 id="task-text"></h2><div><button value="done" class="button primary">Splnil</button><button value="failed" class="button secondary">Nesplnil</button></div></form></dialog><dialog id="result-dialog"><h2>Pořadí v cíli 🏆</h2><ol id="ranking"></ol><button id="result-new" class="button primary">Nová hra</button></dialog>
-<footer><div class="shell"><a href="../../">← Zpět do Herní budky</a></div></footer></body></html>
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#76b74b" />
+    <title>Člověče, nezlob se · Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css" />
+    <link rel="stylesheet" href="clovece.css?v=2" />
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="data/tasks.js" defer></script>
+    <script src="ai.js" defer></script>
+    <script src="clovece.js?v=2" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#hra">Přeskočit ke hře</a>
+    <header class="ludo-header">
+      <div class="shell">
+        <a href="../../" class="back">← Zpět do budky</a>
+        <p class="eyebrow">🎲 Sedmé patro</p>
+        <h1>Člověče, nezlob se</h1>
+        <p>
+          Vyveď všechny čtyři figurky ze základny a dostaň je bezpečně domů.
+        </p>
+      </div>
+    </header>
+    <main id="hra" class="shell ludo-main">
+      <section id="setup" class="panel">
+        <h2>Nastavení hráčů</h2>
+        <div id="players-setup" class="players-setup"></div>
+        <fieldset>
+          <legend>Režim</legend>
+          <label
+            ><input type="radio" name="mode" value="normal" checked /> Běžná
+            hra</label
+          ><label id="tasks-label"
+            ><input type="radio" name="mode" value="tasks" /> Hra s dětskými
+            úkoly</label
+          >
+          <p id="tasks-help"></p>
+        </fieldset>
+        <p id="setup-error" class="error" role="alert"></p>
+        <button id="start" class="button primary">Spustit hru</button>
+      </section>
+      <section id="game" hidden>
+        <div class="game-grid">
+          <section class="board-panel">
+            <div class="turn">
+              <div><span>Na tahu</span><strong id="turn-name"></strong></div>
+              <button
+                id="dice"
+                class="dice"
+                type="button"
+                aria-label="Hodit kostkou"
+              >
+                <img id="dice-image" alt="" hidden />
+                <span id="dice-fallback" aria-hidden="true">⚄</span></button
+              ><button id="roll" class="button primary" type="button">
+                Hodit kostkou
+              </button>
+            </div>
+            <svg
+              id="board"
+              viewBox="0 0 660 660"
+              role="group"
+              aria-label="Deska hry Člověče, nezlob se"
+            ></svg>
+            <div class="actions">
+              <button id="new" class="button secondary">Nová hra</button
+              ><a class="button quiet" href="../../">Zpět do budky</a>
+            </div>
+          </section>
+          <aside class="panel">
+            <h2>Hráči</h2>
+            <ol id="scoreboard"></ol>
+            <div id="status" class="status" role="status" aria-live="assertive">
+              Hra je připravená.
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <dialog id="task-dialog">
+      <form method="dialog">
+        <p class="eyebrow">Úkol pro <span id="task-player"></span></p>
+        <h2 id="task-text"></h2>
+        <div>
+          <button value="done" class="button primary">Splnil</button
+          ><button value="failed" class="button secondary">Nesplnil</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="result-dialog">
+      <h2>Pořadí v cíli 🏆</h2>
+      <ol id="ranking"></ol>
+      <button id="result-new" class="button primary">Nová hra</button>
+    </dialog>
+    <footer>
+      <div class="shell"><a href="../../">← Zpět do Herní budky</a></div>
+    </footer>
+  </body>
+</html>
