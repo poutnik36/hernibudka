@@ -123,20 +123,34 @@
   function recordRoll(state, value) {
     state.rollAttempts++;
     state.consecutiveSixes = value === 6 ? state.consecutiveSixes + 1 : 0;
+    state.lastRollHadLegalMove = false;
   }
   function canRetryFromBase(state, player, value) {
     return (
       value !== 6 &&
       state.rollAttempts < 3 &&
-      player.pawns.every((pawn) => pawn.state === "base")
+      player.pawns.every((pawn) => pawn.state !== "track")
     );
   }
   function getsExtraRoll(state, player) {
     return (
       !state.ranking.includes(player.id) &&
       state.diceValue === 6 &&
+      state.lastRollHadLegalMove &&
       state.consecutiveSixes < 3
     );
+  }
+  function finishWhenOnePlayerRemains(state) {
+    if (
+      state.players.length < 2 ||
+      state.ranking.length < state.players.length - 1
+    )
+      return false;
+    const lastPlayer = state.players.find(
+      (player) => !state.ranking.includes(player.id),
+    );
+    if (lastPlayer) state.ranking.push(lastPlayer.id);
+    return true;
   }
   function makeMove(state, player, pawn, toState, value, flags = {}) {
     const fromSteps = pawn.trackSteps;
@@ -240,6 +254,7 @@
       extraRoll: false,
       rollAttempts: 0,
       consecutiveSixes: 0,
+      lastRollHadLegalMove: false,
       ranking: [],
       taskFieldIndexes: [],
       usedTaskIds: [],
@@ -270,6 +285,7 @@
     recordRoll,
     canRetryFromBase,
     getsExtraRoll,
+    finishWhenOnePlayerRemains,
   };
 });
 
@@ -730,7 +746,7 @@
     return state.players[state.currentPlayerIndex];
   }
   function beginTurn(resetCounters = true, message = null) {
-    if (state.ranking.length === state.players.length) {
+    if (C.finishWhenOnePlayerRemains(state)) {
       finish();
       return;
     }
@@ -764,6 +780,7 @@
     e.status.textContent = `${p.name} hodil/a ${value}.`;
     setTimeout(() => {
       legal = C.getLegalMoves(state, p.id, value);
+      state.lastRollHadLegalMove = legal.length > 0;
       busy = false;
       if (!legal.length) {
         e.status.textContent += " Není možný žádný tah.";
