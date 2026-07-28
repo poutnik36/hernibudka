@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#8c3a88" />
+    <title>Slovní bombička · Další Herní budka</title>
+    <link rel="stylesheet" href="../../assets/css/shared.css" />
+    <link rel="stylesheet" href="slovni-bombicka.css" />
+    <script src="../../assets/js/shared.js" defer></script>
+    <script src="data/categories.js" defer></script>
+    <script src="data/themes.js" defer></script>
+    <script src="slovni-bombicka.js" defer></script>
+  </head>
+  <body>
+    <header class="shell">
+      <a href="../../dalsi-budka/">← Zpět do další budky</a>
+      <p class="eyebrow">💣 Rychlá slovní hra</p>
+      <h1>Slovní bombička</h1>
+      <p>
+        Řekni slovo z kategorie a předej bombičku dál, než vyprší její tajný
+        čas.
+      </p>
+    </header>
+    <main class="shell">
+      <section id="setup" class="panel">
+        <h2>Nastavení hry</h2>
+        <div class="settings">
+          <label>Počet hráčů<select id="player-count"></select></label
+          ><label
+            >Počet kol<select id="rounds">
+              <option value="5">5 kol</option>
+              <option value="8">8 kol</option>
+              <option value="10">10 kol</option>
+            </select></label
+          ><label
+            >Délka bombičky<select id="duration">
+              <option value="short">Krátká (10–25 s)</option>
+              <option value="normal" selected>Běžná (15–40 s)</option>
+              <option value="long">Dlouhá (25–60 s)</option>
+            </select></label
+          ><label class="sound"
+            ><input id="sound" type="checkbox" /> Jemný zvuk výbuchu</label
+          >
+        </div>
+        <div id="player-names" class="player-names"></div>
+        <fieldset>
+          <legend>Kategorie</legend>
+          <div id="category-groups" class="category-groups"></div>
+        </fieldset>
+        <p id="setup-error" class="error" role="alert"></p>
+        <div class="actions">
+          <button id="start" class="button primary">Nová hra</button
+          ><a class="button quiet" href="../../dalsi-budka/"
+            >Zpět do další budky</a
+          >
+        </div>
+      </section>
+      <section id="game" class="panel" hidden>
+        <div class="game-info">
+          <strong id="round"></strong><span id="category"></span>
+        </div>
+        <div id="player-ring" class="player-ring"></div>
+        <div id="bomb" class="bomb" aria-hidden="true">
+          <span id="bomb-symbol">💣</span><span class="spark">✨</span>
+        </div>
+        <p id="status" class="status" role="status" aria-live="assertive"></p>
+        <div class="actions">
+          <button id="pass" class="button pass">Předat dál</button
+          ><button id="next-round" class="button primary" hidden>
+            Další kolo</button
+          ><button id="again" class="button secondary">Hrát znovu</button
+          ><button id="settings" class="button quiet">Změnit hráče</button
+          ><a class="button quiet" href="../../dalsi-budka/"
+            >Zpět do další budky</a
+          >
+        </div>
+        <section class="score">
+          <h2>Trestné body</h2>
+          <ol id="scoreboard"></ol>
+        </section>
+      </section>
+      <section class="panel instructions">
+        <h2>Jak hrát</h2>
+        <p>
+          Aktuální hráč řekne nahlas slovo z vybrané kategorie a stiskne
+          <strong>Předat dál</strong>. Přesný čas bombičky je tajný. Kdo ji drží
+          při výbuchu, získá trestný bod. Vyhrává nejnižší skóre.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>

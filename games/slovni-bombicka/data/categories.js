@@ -1,0 +1,128 @@
+(function (root) {
+  "use strict";
+  const groups = {
+    zvirata: [
+      "Zvířata začínající na K",
+      "Zvířata žijící v lese",
+      "Zvířata s křídly",
+      "Zvířata žijící ve vodě",
+      "Domácí mazlíčci",
+      "Zvířata s pruhy nebo skvrnami",
+      "Malá zvířata",
+      "Zvířata, která umějí rychle běhat",
+    ],
+    jidlo: [
+      "Ovoce",
+      "Zelenina",
+      "Jídla k snídani",
+      "Sladkosti",
+      "Co můžeme dát na pizzu",
+      "Jídla, která se jedí lžící",
+      "Nápoje",
+      "Co si můžeme vzít na piknik",
+    ],
+    skola: [
+      "Věci v penálu",
+      "Školní předměty",
+      "Co najdeme ve třídě",
+      "Co děláme o přestávce",
+      "Slova spojená s matematikou",
+      "Co nosíme v aktovce",
+      "Povolání ve škole",
+      "Co může být napsané na tabuli",
+    ],
+    priroda: [
+      "Stromy",
+      "Květiny",
+      "Co najdeme v lese",
+      "Co vidíme na obloze",
+      "Druhy počasí",
+      "Co můžeme najít u řeky",
+      "Přírodní barvy",
+      "Co roste na zahradě",
+    ],
+    pohadky: [
+      "Pohádkové bytosti",
+      "Kouzelné předměty",
+      "Co může být na hradě",
+      "Pohádková zvířata",
+      "Co umí kouzelník",
+      "Místa z dobrodružných příběhů",
+      "Co může hlídat drak",
+      "Vlastnosti pohádkového hrdiny",
+    ],
+    svet: [
+      "Česká města",
+      "Evropské země",
+      "Hlavní města",
+      "Místa, kam můžeme jet na výlet",
+      "Co najdeme u moře",
+      "Dopravní prostředky",
+      "Jazyky světa",
+      "Známé světové památky",
+    ],
+    pismena: [
+      "Slova začínající na A",
+      "Slova začínající na B",
+      "Slova začínající na M",
+      "Slova začínající na P",
+      "Slova začínající na S",
+      "Slova končící na A",
+      "Slova se dvěma slabikami",
+      "Slova obsahující písmeno R",
+    ],
+    domov: [
+      "Co najdeme v kuchyni",
+      "Věci v koupelně",
+      "Co máme v dětském pokoji",
+      "Věci, které jsou kulaté",
+      "Elektrické spotřebiče",
+      "Co používáme při úklidu",
+      "Věci, které mají dveře",
+      "Co může ležet na stole",
+    ],
+    slovesa: [
+      "Co můžeme dělat venku",
+      "Co děláme rukama",
+      "Co umíme dělat ve vodě",
+      "Co děláme ráno",
+      "Co může dělat pes",
+      "Co děláme při sportu",
+      "Co můžeme dělat potichu",
+      "Co můžeme dělat společně",
+    ],
+    legrace: [
+      "Co by se nevešlo do kapsy",
+      "Co by si oblékl sněhulák",
+      "Co může být lepkavé",
+      "Co vydává legrační zvuk",
+      "Co bychom vzali na Měsíc",
+      "Co nechceme najít v posteli",
+      "Neobvyklé jméno pro kočku",
+      "Co by mohl vařit robot",
+    ],
+  };
+  const labels = {
+    zvirata: "Zvířata",
+    jidlo: "Jídlo",
+    skola: "Škola",
+    priroda: "Příroda",
+    pohadky: "Pohádky",
+    svet: "Města a země",
+    pismena: "Hra s písmeny",
+    domov: "Domácnost",
+    slovesa: "Slovesa",
+    legrace: "Legrační témata",
+  };
+  const categories = Object.entries(groups).flatMap(([group, items]) =>
+    items.map((title, index) => ({
+      id: `${group}-${index + 1}`,
+      group,
+      title,
+    })),
+  );
+  root.WORD_BOMB_CATEGORIES = categories;
+  root.WORD_BOMB_GROUPS = labels;
+  if (typeof module === "object" && module.exports)
+    module.exports = { categories, groups: labels };
+})(typeof window !== "undefined" ? window : globalThis);

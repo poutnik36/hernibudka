@@ -1,0 +1,264 @@
+body {
+  background: radial-gradient(circle at 50% 20%, #fff2ad, #e5f5d0 50%, #fffdf3);
+}
+.shell {
+  width: min(100% - 1rem, 72rem);
+  margin: auto;
+}
+header {
+  padding: 1.2rem 0 2rem;
+  text-align: center;
+}
+header h1 {
+  margin: 0.2rem 0;
+  font-size: clamp(2.4rem, 8vw, 5rem);
+  color: var(--berry);
+}
+header a {
+  color: var(--leaf-dark);
+  font-weight: 900;
+}
+.panel {
+  margin-bottom: 1rem;
+  padding: clamp(0.8rem, 3vw, 1.5rem);
+  background: #fff;
+  border: 2px solid var(--line);
+  border-radius: 1.2rem;
+  box-shadow: var(--shadow);
+}
+.settings {
+  display: grid;
+  gap: 0.7rem;
+}
+.settings label {
+  display: grid;
+  font-weight: 900;
+}
+.settings select,
+.player-names input {
+  min-height: 2.8rem;
+  padding: 0.5rem;
+  border: 2px solid #839c90;
+  border-radius: 0.6rem;
+  font: inherit;
+}
+.sound {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sound input {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.player-names {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin: 1rem 0;
+}
+.player-names label {
+  display: grid;
+  font-weight: 800;
+}
+fieldset {
+  border: 2px solid var(--line);
+  border-radius: 0.8rem;
+}
+.category-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+.category-groups label {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+.category-groups input {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.error {
+  color: #a21d32;
+  font-weight: 900;
+}
+#game {
+  position: relative;
+}
+.game-info {
+  display: grid;
+  gap: 0.35rem;
+  text-align: center;
+}
+.game-info strong {
+  font-size: 1.2rem;
+}
+.game-info span {
+  font-size: clamp(1.35rem, 4vw, 2.2rem);
+  font-weight: 900;
+  color: #6d2d69;
+}
+.player-ring {
+  position: relative;
+  width: min(100%, 34rem);
+  height: 28rem;
+  margin: auto;
+}
+.player {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8rem;
+  padding: 0.55rem;
+  text-align: center;
+  background: #edf6dc;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  font-weight: 900;
+  transform: translate(-50%, -50%) rotate(var(--angle)) translate(12rem)
+    rotate(calc(-1 * var(--angle)));
+}
+.player.active {
+  border-color: var(--berry);
+  background: #fff2ad;
+  box-shadow:
+    0 0 0 0.35rem #fff,
+    0 0 1.2rem #8c3a8866;
+}
+.bomb {
+  position: absolute;
+  left: 50%;
+  width: 9rem;
+  height: 9rem;
+  margin-top: -19rem;
+  display: grid;
+  place-items: center;
+  transform: translateX(-50%);
+  font-size: 6rem;
+}
+.bomb.ticking {
+  animation: pulse 0.8s ease-in-out infinite alternate;
+}
+.bomb.exploded {
+  animation: pop 0.45s ease-out;
+}
+.spark {
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  font-size: 2rem;
+}
+.status {
+  min-height: 3rem;
+  padding: 0.75rem;
+  background: #f1f7df;
+  border-left: 5px solid var(--berry);
+  font-weight: 900;
+  text-align: center;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.55rem;
+}
+.button {
+  min-height: 2.9rem;
+  padding: 0.65rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 0.7rem;
+  font: inherit;
+  font-weight: 900;
+  text-decoration: none;
+  cursor: pointer;
+}
+.primary {
+  color: #fff;
+  background: var(--leaf-dark);
+}
+.secondary {
+  color: var(--ink);
+  background: var(--sun);
+}
+.quiet {
+  color: var(--ink);
+  background: #fff;
+  border-color: var(--line);
+}
+.pass {
+  min-width: min(100%, 18rem);
+  color: #fff;
+  background: var(--berry);
+  font-size: 1.25rem;
+}
+.button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.score {
+  max-width: 38rem;
+  margin: 1rem auto 0;
+}
+.score ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+.score li {
+  padding: 0.5rem;
+  background: #edf6dc;
+  border-radius: 0.5rem;
+}
+.instructions {
+  box-shadow: none;
+}
+@keyframes pulse {
+  to {
+    transform: translateX(-50%) scale(1.07) rotate(2deg);
+  }
+}
+@keyframes pop {
+  50% {
+    transform: translateX(-50%) scale(1.35);
+  }
+  to {
+    transform: translateX(-50%) scale(1);
+  }
+}
+@media (min-width: 46rem) {
+  .settings {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .category-groups {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 42rem) {
+  .player-ring {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    height: auto;
+    margin: 1rem 0 8rem;
+  }
+  .player {
+    position: static;
+    width: auto;
+    transform: none;
+  }
+  .bomb {
+    margin-top: -7.5rem;
+  }
+  .score ol {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bomb.ticking,
+  .bomb.exploded {
+    animation: none;
+  }
+}
