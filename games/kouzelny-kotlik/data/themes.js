@@ -1,0 +1,1 @@
+(function(root,factory){const d=factory();if(typeof module==="object"&&module.exports)module.exports=d;root.CauldronThemes=d})(typeof globalThis!=="undefined"?globalThis:this,function(){return{default:{name:"Noční laboratoř",images:{cauldron:"",background:"",sparkle:""},fallbacks:{cauldron:"🫕",sparkle:"✨"}}}});
