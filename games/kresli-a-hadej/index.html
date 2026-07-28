@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#fff4d7">
+  <title>Kresli a hádej | Herní budka</title>
+  <link rel="stylesheet" href="kresli-a-hadej.css?v=1">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a href="../../dalsi-budka/" class="back">← Zpět do druhé budky</a>
+      <h1>🎨 Kresli a hádej</h1>
+      <button id="newGameTop" class="quiet" type="button">Nová hra</button>
+    </header>
+
+    <section id="setup" class="panel setup" aria-labelledby="setupTitle">
+      <h2 id="setupTitle">Připravte týmy</h2>
+      <div class="settings-grid">
+        <label>Počet hráčů <select id="playerCount"><option>4</option><option>5</option><option selected>6</option><option>7</option><option>8</option></select></label>
+        <label>Počet týmů <select id="teamCount"><option>2</option><option selected>3</option><option>4</option></select></label>
+        <label>Čas kola <select id="roundTime"><option value="30">30 sekund</option><option value="60" selected>60 sekund</option><option value="90">90 sekund</option></select></label>
+        <label>Počet kol <select id="roundCount"><option>6</option><option selected>12</option><option>18</option><option>24</option></select></label>
+        <label>Obtížnost <select id="difficulty"><option value="vše">Všechny</option><option value="lehké">Lehká</option><option value="střední">Střední</option><option value="těžké">Těžká</option></select></label>
+      </div>
+      <fieldset><legend>Kategorie</legend><div id="categories" class="checks"></div></fieldset>
+      <div class="edit-grid">
+        <fieldset><legend>Hráči</legend><div id="playersEditor"></div></fieldset>
+        <fieldset><legend>Týmy</legend><div id="teamsEditor"></div></fieldset>
+      </div>
+      <p id="setupError" class="error" role="alert"></p>
+      <button id="startGame" class="primary" type="button">Spustit hru</button>
+    </section>
+
+    <section id="handoff" class="panel centered" hidden>
+      <p class="eyebrow">Tajné zadání</p><h2 id="handoffText"></h2>
+      <p>Ostatní se teď nedívají na obrazovku.</p>
+      <button id="confirmHandoff" class="primary" type="button">Zařízení mám já</button>
+    </section>
+    <section id="secret" class="panel centered" hidden>
+      <p class="eyebrow">Kreslí pouze</p><h2 id="secretDrawer"></h2>
+      <p id="secretWord" class="secret-word"></p>
+      <button id="beginDrawing" class="primary" type="button">Začít kreslit</button>
+    </section>
+
+    <section id="play" hidden>
+      <div class="status panel">
+        <div><span>Kolo</span><strong id="roundStatus"></strong></div>
+        <div><span>Kreslí</span><strong id="drawerStatus"></strong></div>
+        <div class="timer"><span>Čas</span><strong id="timerStatus">1:00</strong></div>
+      </div>
+      <div id="scoreboard" class="scoreboard" aria-label="Skóre týmů"></div>
+      <div class="canvas-wrap">
+        <canvas id="canvas" aria-label="Kreslicí plocha"></canvas>
+      </div>
+      <div class="tools panel" aria-label="Nástroje kreslení">
+        <div id="colors" class="tool-group"></div>
+        <div class="tool-group widths">
+          <button data-width="4" class="tool selected" type="button" aria-label="Tenká čára">•</button>
+          <button data-width="9" class="tool" type="button" aria-label="Střední čára">●</button>
+          <button data-width="18" class="tool" type="button" aria-label="Silná čára">⬤</button>
+        </div>
+        <button id="eraser" class="tool" type="button">Guma</button>
+        <button id="undo" class="tool" type="button">Zpět</button>
+        <button id="clearCanvas" class="tool" type="button">Vymazat</button>
+      </div>
+      <div class="outcomes">
+        <button id="guessed" class="success" type="button">✓ Uhodnuto</button>
+        <button id="skip" class="secondary" type="button">Přeskočit</button>
+      </div>
+    </section>
+
+    <section id="roundResult" class="panel centered" hidden>
+      <p class="eyebrow">Konec kola</p><h2 id="resultTitle"></h2><p id="resultWord"></p>
+      <button id="nextRound" class="primary" type="button">Další kolo</button>
+    </section>
+    <section id="finish" class="panel centered" hidden>
+      <p class="trophy">🏆</p><h2>Výsledky</h2><div id="finalScores"></div>
+      <button id="playAgain" class="primary" type="button">Hrát znovu</button>
+      <button id="settings" class="secondary" type="button">Změnit nastavení</button>
+    </section>
+  </main>
+  <script src="data/words.js"></script><script src="data/themes.js"></script><script src="kresli-a-hadej.js"></script>
+</body>
+</html>
