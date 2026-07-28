@@ -1,0 +1,1 @@
+(function(root,factory){const d=factory();if(typeof module==="object"&&module.exports)module.exports=d;root.WhisperThemes=d})(typeof globalThis!=="undefined"?globalThis:this,function(){return{default:{name:"Obrázková pošta",icons:{secret:"🤫",draw:"🎨",guess:"💭",reveal:"🎉"},images:{paper:"",pencil:"",reveal:""}}}});
