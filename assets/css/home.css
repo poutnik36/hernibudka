@@ -18,6 +18,30 @@
     font-weight: 700;
 }
 
+.budka-switch {
+    display: inline-flex;
+    min-height: 3.25rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.7rem 1.35rem;
+    margin-top: 1.25rem;
+    color: #fff;
+    background: var(--berry);
+    border: 3px solid #fff;
+    border-radius: 999px;
+    box-shadow: 0 0.65rem 1.4rem rgba(80, 34, 78, 0.22);
+    font-weight: 900;
+    text-decoration: none;
+    transition: transform 160ms ease, background-color 160ms ease;
+}
+
+.budka-switch:hover,
+.budka-switch:focus-visible {
+    background: #6d2d69;
+    transform: translateY(-2px);
+}
+
 .game-house {
     max-width: 55rem;
 }

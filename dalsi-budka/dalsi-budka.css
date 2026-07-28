@@ -1,0 +1,66 @@
+.second-header h1 {
+  color: var(--berry);
+}
+
+.second-header .eyebrow {
+  color: #6d2d69;
+}
+
+.game-window--second-1 {
+  top: 17.9%;
+  left: 30.3%;
+}
+.game-window--second-2 {
+  top: 17.9%;
+  left: 52.5%;
+}
+.game-window--second-3 {
+  top: 31.5%;
+  left: 30.3%;
+}
+.game-window--second-4 {
+  top: 31.5%;
+  left: 52.5%;
+}
+.game-window--second-5 {
+  top: 45.5%;
+  left: 30.3%;
+}
+.game-window--second-6 {
+  top: 45.5%;
+  left: 52.5%;
+}
+.game-window--second-7 {
+  top: 59.8%;
+  left: 30.3%;
+}
+.game-window--second-8 {
+  top: 59.8%;
+  left: 52.5%;
+}
+.game-window--second-9 {
+  top: 73.8%;
+  left: 30.3%;
+}
+.game-window--second-10 {
+  top: 73.8%;
+  left: 52.5%;
+}
+
+.second-header + main .game-window__status {
+  background: rgba(109, 45, 105, 0.92);
+}
+
+.second-header + main .status-badge {
+  background: var(--berry);
+}
+
+@media (max-width: 44rem) {
+  .game-window--second-1,
+  .game-window--second-3,
+  .game-window--second-5,
+  .game-window--second-7,
+  .game-window--second-9 {
+    left: 30%;
+  }
+}
