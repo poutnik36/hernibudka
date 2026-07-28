@@ -1,0 +1,18 @@
+<!doctype html><html lang="cs"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#16213c"><title>Kvízový bzučák | Herní budka</title><link rel="stylesheet" href="kvizovy-bzucak.css?v=1"></head>
+<body><main class="shell">
+<header><a href="../../dalsi-budka/">← Zpět do druhé budky</a><h1>🔔 Kvízový bzučák</h1><button id="newTop" class="muted">Nová hra</button></header>
+<section id="setup" class="card"><h2>Nastavení kvízu</h2><div class="settings">
+<label>Hráčů <select id="playerCount"><option>4</option><option>5</option><option selected>6</option><option>7</option><option>8</option></select></label>
+<label>Otázek <select id="questionCount"><option>10</option><option selected>15</option><option>20</option><option>30</option></select></label>
+<label>Obtížnost <select id="difficulty"><option value="all">Všechny věkové úrovně</option><option value="1">Mladší</option><option value="2">Střední</option><option value="3">Starší</option></select></label>
+<label>Čas na odpověď <select id="answerTime"><option>5</option><option selected>10</option><option>15</option><option>20</option></select></label>
+</div><label class="inline"><input id="penalty" type="checkbox"> Odečíst bod za chybnou odpověď</label>
+<fieldset><legend>Kategorie</legend><div id="categories" class="checks"></div></fieldset><fieldset><legend>Hráči</legend><div id="players"></div></fieldset><p id="error" role="alert"></p><button id="start" class="primary">Spustit kvíz</button></section>
+<section id="game" hidden>
+<div class="game-head card"><span id="progress"></span><div id="scores"></div></div>
+<article class="question card"><p id="category"></p><h2 id="question"></h2><p id="buzzHint">Bzučáky jsou odemčené!</p><div id="answerPanel" hidden><strong id="buzzed"></strong><span id="timer"></span><div><button id="correct" class="good">Správně</button><button id="wrong" class="bad">Špatně</button></div></div><details id="answer"><summary>Zobrazit odpověď moderátorovi</summary><strong id="answerText"></strong></details></article>
+<div id="buzzers" class="buzzers" aria-label="Bzučáky hráčů"></div><button id="skip" class="muted skip">Nikdo neví – přeskočit</button>
+</section>
+<section id="round" class="card center" hidden><h2 id="roundTitle"></h2><p id="roundAnswer"></p><button id="next" class="primary">Další otázka</button></section>
+<section id="finish" class="card center" hidden><div class="cup">🏆</div><h2>Výsledky kvízu</h2><div id="finalScores"></div><button id="again" class="primary">Hrát znovu</button><button id="settings" class="muted">Změnit nastavení</button></section>
+</main><script src="data/questions.js"></script><script src="data/themes.js"></script><script src="kvizovy-bzucak.js"></script></body></html>
