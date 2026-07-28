@@ -11,7 +11,7 @@
     <title>Další Herní budka</title>
     <link rel="stylesheet" href="../assets/css/shared.css" />
     <link rel="stylesheet" href="../assets/css/home.css?v=12" />
-    <link rel="stylesheet" href="dalsi-budka.css?v=1" />
+    <link rel="stylesheet" href="dalsi-budka.css?v=2" />
     <script src="../assets/js/shared.js" defer></script>
     <script src="dalsi-budka.js?v=1" defer></script>
   </head>
@@ -39,15 +39,15 @@
             alt="Kreslená zelená herní budka s modrými okny v lese"
           />
           <div class="window-grid">
-            <div
-              class="game-window game-window--second-1"
-              role="group"
-              aria-label="Slovní bombička, připravujeme"
+            <a
+              class="game-window game-window--second-1 game-window--available"
+              href="../games/slovni-bombicka/"
+              aria-label="Hrát Slovní bombičku"
             >
               <span class="game-window__icon" aria-hidden="true">💣</span
               ><span class="game-window__name">Slovní bombička</span
-              ><span class="game-window__status">Připravujeme</span>
-            </div>
+              ><span class="game-window__status">Hrát</span>
+            </a>
             <div
               class="game-window game-window--second-2"
               role="group"
@@ -154,7 +154,7 @@
                 Rychlá slovní výzva, ve které se bombička nesmí zastavit právě u
                 tebe.
               </p>
-              <span class="status-badge">Připravujeme</span>
+              <a class="play-link" href="../games/slovni-bombicka/">Hrát Slovní bombičku</a>
             </div>
           </li>
           <li class="game-card">
