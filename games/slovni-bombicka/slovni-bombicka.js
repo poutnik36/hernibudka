@@ -106,7 +106,7 @@
     category = null,
     timer = null,
     gameToken = 0;
-  for (let count = 4; count <= 10; count++)
+  for (let count = 3; count <= 10; count++)
     el["player-count"].add(new Option(`${count} hráči`, count));
   Object.entries(groups).forEach(([id, label]) => {
     const wrapper = document.createElement("label"),
